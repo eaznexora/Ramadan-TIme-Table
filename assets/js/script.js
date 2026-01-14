@@ -85,27 +85,36 @@ function createRowHtml(item, animate = false) {
 
     return `
         <div class="${cardClass} ${animationClass} rounded-xl p-4 transition-all duration-200 flex items-center justify-between mb-3 relative overflow-hidden">
+            
             <div class="flex flex-col w-1/3 border-r border-gray-100 pr-3">
                 <div class="flex items-center">
                     <span class="text-xs font-bold text-gray-400 uppercase">Roza ${item.roza}</span>
                     ${badge}
                 </div>
-                <span class="text-lg font-bold ${textClass} leading-tight mt-1">${item.date}</span>
+                <span class="text-lg font-bold ${textClass} leading-tight mt-1 whitespace-nowrap">${item.date}</span>
                 <span class="text-xs text-gray-400 font-medium">${item.day}</span>
             </div>
-            <div class="flex flex-1 justify-around items-center pl-2">
-                <div class="text-center">
+
+            <div class="flex flex-1 justify-around items-center pl-2 gap-2">
+                
+                <div class="text-center flex flex-col items-center">
                     <div class="flex items-center justify-center text-gray-400 mb-1">
                         <span class="text-[10px] uppercase font-semibold text-gray-400 tracking-wide">Sehri</span>
                     </div>
-                    <span class="text-sm font-bold text-gray-800 bg-gray-100/80 px-3 py-1.5 rounded-lg border border-gray-200">${item.sehri}</span>
+                    <span class="text-sm font-bold text-gray-800 bg-gray-100/80 px-2 py-1.5 rounded-lg border border-gray-200 whitespace-nowrap min-w-[80px] flex justify-center shadow-sm">
+                        ${item.sehri}
+                    </span>
                 </div>
-                <div class="text-center">
+
+                <div class="text-center flex flex-col items-center">
                     <div class="flex items-center justify-center text-gray-400 mb-1">
                         <span class="text-[10px] uppercase font-semibold text-gray-400 tracking-wide">Iftar</span>
                     </div>
-                    <span class="text-sm font-bold text-gray-800 bg-gray-100/80 px-3 py-1.5 rounded-lg border border-gray-200">${item.iftar}</span>
+                    <span class="text-sm font-bold text-gray-800 bg-gray-100/80 px-2 py-1.5 rounded-lg border border-gray-200 whitespace-nowrap min-w-[80px] flex justify-center shadow-sm">
+                        ${item.iftar}
+                    </span>
                 </div>
+
             </div>
         </div>
     `;
@@ -211,3 +220,23 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', toggleView);
     }
 });
+
+// --- Function: Share App ---
+function shareApp() {
+    const shareData = {
+        title: 'Ramadan Timetable 2026',
+        text: 'Check out the Digital Ramadan Timetable for Mumbai 2026!',
+        url: window.location.href // Shares the current page link
+    };
+
+    // Check if browser supports native sharing (Works on most mobiles)
+    if (navigator.share) {
+        navigator.share(shareData)
+            .then(() => console.log('Shared successfully'))
+            .catch((err) => console.log('Error sharing:', err));
+    } else {
+        // Fallback for desktop: Copy to clipboard
+        navigator.clipboard.writeText(window.location.href);
+        alert('Link copied to clipboard!');
+    }
+}
