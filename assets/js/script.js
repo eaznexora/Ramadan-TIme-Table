@@ -181,11 +181,14 @@ function startCountdown() {
     }, 1000);
 }
 
+// ... existing code ...
+
 // --- Function: Share App ---
 function shareApp() {
     const shareData = {
         title: 'Ramadan Timetable 2026',
-        text: 'Check out the Digital Ramadan Timetable for Mumbai 2026!',
+        // Updated description text as requested
+        text: '🌙 *Ramadan Timetable 2026 - Mumbai*\n\nView the complete digital timetable with daily Sehri & Iftar timings, Duas, and more.\n\nClick here to view:',
         url: window.location.href
     };
     if (navigator.share) {
@@ -195,6 +198,8 @@ function shareApp() {
         alert('Link copied to clipboard!');
     }
 }
+
+// ... existing code ...
 
 // ================= DUA OF THE DAY SLIDESHOW LOGIC =================
 
