@@ -3,119 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Force Refresh Timestamp: 2026-01-14 -->
     <title>Ramadan Timetable 2026 - Digital Card</title>
     
-    <!-- Fonts: Inter for English, Amiri for Arabic -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS (via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Icons (Lucide) - Switched to Cloudflare CDN for better stability -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
 
-    <!-- Tailwind Config for Custom Colors -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f2fcf5',
-                            100: '#e1f8e8',
-                            500: '#10b981', /* Emerald 500 */
-                            600: '#059669', /* Emerald 600 */
-                            700: '#047857', /* Emerald 700 */
-                            800: '#065f46', /* Emerald 800 */
-                            900: '#064e3b', /* Emerald 900 */
-                        },
-                        gold: {
-                            400: '#fbbf24',
-                            500: '#f59e0b',
-                            600: '#d97706',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-                        arabic: ['Amiri', 'serif'],
-                    },
-                    backgroundImage: {
-                        'islamic-pattern': "radial-gradient(#10b981 0.5px, transparent 0.5px), radial-gradient(#10b981 0.5px, #f2fcf5 0.5px)",
-                    },
-                    backgroundSize: {
-                        'islamic-size': '20px 20px',
-                    },
-                    backgroundPosition: {
-                        'islamic-pos': '0 0, 10px 10px',
-                    }
-                }
-            }
-        }
-    </script>
+    <script src="assets/js/tailwind-config.js"></script> 
 
-    <!-- Custom CSS -->
-    <style>
-        /* Smooth Scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #10b981;
-            border-radius: 10px;
-        }
-
-        /* Glassmorphism Utility */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Arabic Text Styling */
-        .arabic-text {
-            line-height: 1.8;
-            direction: rtl;
-        }
-        
-        /* Loader */
-        .loader {
-            border: 3px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 3px solid #10b981;
-            width: 24px;
-            height: 24px;
-            -webkit-animation: spin 1s linear infinite; /* Safari */
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col relative">
     
-    <!-- Background Pattern Overlay -->
     <div class="fixed inset-0 bg-islamic-pattern bg-islamic-size bg-islamic-pos opacity-5 pointer-events-none z-0"></div>
 
-    <!-- Main Content Wrapper (Mobile Centered) -->
     <div class="relative z-10 w-full max-w-md mx-auto bg-white min-h-screen shadow-xl flex flex-col pb-20">
         
-        <!-- HEADER Section -->
         <header class="bg-brand-900 text-white p-6 rounded-b-3xl shadow-lg relative overflow-hidden">
-            <!-- Decorative Circle -->
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-brand-700 rounded-full opacity-50 blur-2xl"></div>
             
             <div class="relative z-10">
@@ -133,7 +41,6 @@
                     </div>
                 </div>
 
-                <!-- Quote -->
                 <div class="bg-brand-800/50 rounded-xl p-4 border border-brand-700/50 backdrop-blur-sm">
                     <p class="text-center italic text-brand-50 text-sm mb-2">
                         "When Ramadan begins, the gates of Paradise are opened."
@@ -143,34 +50,28 @@
             </div>
         </header>
 
-        <!-- COUNTDOWN Section -->
         <section class="px-5 -mt-6 relative z-20">
             <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-100">
                 <h3 class="text-center text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">Ramadan Begins In</h3>
                 
                 <div class="flex justify-center gap-3 text-center" id="countdown-container">
-                    <!-- Days -->
                     <div class="flex flex-col items-center">
                         <div class="w-16 h-16 bg-brand-50 rounded-xl flex items-center justify-center border border-brand-100">
-                            <span class="text-2xl font-bold text-brand-700" id="cd-days">35</span>
+                            <span class="text-2xl font-bold text-brand-700" id="cd-days">--</span>
                         </div>
                         <span class="text-xs text-gray-500 mt-1 font-medium">Days</span>
                     </div>
-                    <!-- Separator -->
                     <div class="text-brand-300 text-xl font-bold mt-4">:</div>
-                    <!-- Hours -->
                     <div class="flex flex-col items-center">
                         <div class="w-16 h-16 bg-brand-50 rounded-xl flex items-center justify-center border border-brand-100">
-                            <span class="text-2xl font-bold text-brand-700" id="cd-hours">06</span>
+                            <span class="text-2xl font-bold text-brand-700" id="cd-hours">--</span>
                         </div>
                         <span class="text-xs text-gray-500 mt-1 font-medium">Hours</span>
                     </div>
-                    <!-- Separator -->
                     <div class="text-brand-300 text-xl font-bold mt-4">:</div>
-                    <!-- Minutes -->
                     <div class="flex flex-col items-center">
                         <div class="w-16 h-16 bg-brand-50 rounded-xl flex items-center justify-center border border-brand-100">
-                            <span class="text-2xl font-bold text-brand-700" id="cd-minutes">12</span>
+                            <span class="text-2xl font-bold text-brand-700" id="cd-minutes">--</span>
                         </div>
                         <span class="text-xs text-gray-500 mt-1 font-medium">Minutes</span>
                     </div>
@@ -182,10 +83,8 @@
             </div>
         </section>
 
-        <!-- DUA SECTION (First Ashrah) -->
         <section class="px-5 mt-6">
             <div class="bg-gradient-to-br from-brand-900 to-brand-800 rounded-2xl p-6 text-white relative overflow-hidden shadow-lg">
-                <!-- Decorative Pattern -->
                 <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full -mr-10 -mt-10"></div>
                 
                 <div class="flex items-center justify-between mb-4">
@@ -195,7 +94,7 @@
 
                 <div class="text-center mb-4">
                     <p class="arabic-text text-2xl mb-3 font-arabic leading-loose">
-                        رَبِّ اغْفِرْ وَارْحَمْ وَأَنتَ خَيْرُ الرَّاحِمِينَ
+                        رَبِّ اغْفِرْ وَارْحَمْ وَأَنتَ خَيْرُ الرَّاحِمِينَ
                     </p>
                     <p class="text-brand-100 text-sm italic mb-2">
                         (Rabbi'ghfir warham wa anta khayrur-rahimin)
@@ -211,7 +110,6 @@
             </div>
         </section>
 
-        <!-- TIMETABLE LIST Section -->
         <section class="px-5 mt-8">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-bold text-gray-800">Daily Timetable</h3>
@@ -219,19 +117,17 @@
             </div>
 
             <div class="space-y-3" id="timetable-list">
-                <!-- JS will populate this -->
                 <div class="flex justify-center p-4">
                     <div class="loader"></div>
                 </div>
             </div>
 
-            <button onclick="alert('Full calendar view would open here!')" class="w-full mt-4 py-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-600 font-medium rounded-xl flex items-center justify-center transition-colors">
-                <span>View Complete Timetable</span>
-                <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+            <button id="view-all-btn" class="w-full mt-4 py-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-600 font-medium rounded-xl flex items-center justify-center transition-colors">
+             <span id="btn-text">View Complete Timetable</span>
+             <i id="btn-icon" data-lucide="chevron-down" class="w-4 h-4 ml-2 transition-transform duration-300"></i>
             </button>
         </section>
 
-        <!-- SPONSORED CARD -->
         <section class="px-5 mt-8">
             <div class="border border-brand-100 rounded-2xl p-1 shadow-sm bg-white">
                 <div class="bg-brand-50 rounded-xl p-5 border border-dashed border-brand-200">
@@ -243,9 +139,7 @@
                     </div>
                     <h4 class="text-lg font-bold text-gray-800">PRINTAGE</h4>
                     <p class="text-xs text-gray-500 uppercase tracking-wide mb-3">Designing & Printing</p>
-                    
                     <p class="text-sm text-gray-700 font-medium mb-4">Ramadan Special Printing Solutions. Banners, Visiting Cards & Flex.</p>
-                    
                     <button class="w-full bg-brand-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition shadow-lg shadow-brand-200">
                         Connect on WhatsApp
                     </button>
@@ -253,12 +147,9 @@
             </div>
         </section>
         
-        <!-- FOOTER SPACER (for fixed bottom nav) -->
         <div class="h-24"></div>
-
     </div>
 
-    <!-- BOTTOM NAVIGATION (Fixed) -->
     <nav class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 pb-safe">
         <div class="max-w-md mx-auto flex justify-around items-center h-16">
             <a href="#" class="flex flex-col items-center justify-center w-full h-full text-brand-600">
@@ -280,122 +171,6 @@
         </div>
     </nav>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // --- Helper: Safe Icon Initialization ---
-        function safeCreateIcons() {
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            } else {
-                console.warn('Lucide icons failed to load. Please check internet connection.');
-            }
-        }
-
-        // --- Data: Timetable (Mock Data based on PDF) ---
-        const timetableData = [
-            { roza: 1, date: "Feb 19", day: "Thursday", sehri: "05:51 AM", iftar: "06:40 PM", active: true },
-            { roza: 2, date: "Feb 20", day: "Friday", sehri: "05:51 AM", iftar: "06:40 PM", active: false },
-            { roza: 3, date: "Feb 21", day: "Saturday", sehri: "05:50 AM", iftar: "06:41 PM", active: false },
-            { roza: 4, date: "Feb 22", day: "Sunday", sehri: "05:49 AM", iftar: "06:41 PM", active: false },
-            { roza: 5, date: "Feb 23", day: "Monday", sehri: "05:49 AM", iftar: "06:42 PM", active: false },
-        ];
-
-        // --- Function: Render Timetable ---
-        function renderTimetable() {
-            const container = document.getElementById('timetable-list');
-            if (!container) return;
-            container.innerHTML = ''; // Clear loader
-
-            timetableData.forEach(item => {
-                const isToday = item.active; 
-                const cardClass = isToday 
-                    ? 'bg-white border-l-4 border-l-brand-500 shadow-md transform scale-[1.02]' 
-                    : 'bg-gray-50 border border-gray-100 hover:bg-white';
-                
-                const textClass = isToday ? 'text-brand-700' : 'text-gray-600';
-                const badge = isToday 
-                    ? `<span class="bg-brand-100 text-brand-700 text-[10px] font-bold px-2 py-0.5 rounded-full ml-2 animate-pulse">TODAY</span>` 
-                    : '';
-
-                const html = `
-                    <div class="${cardClass} rounded-xl p-4 transition-all duration-200 flex items-center justify-between">
-                        <!-- Date & Roza -->
-                        <div class="flex flex-col w-1/3 border-r border-gray-100 pr-3">
-                            <div class="flex items-center">
-                                <span class="text-xs font-bold text-gray-400 uppercase">Roza ${item.roza}</span>
-                                ${badge}
-                            </div>
-                            <span class="text-lg font-bold ${textClass} leading-tight mt-1">${item.date}</span>
-                            <span class="text-xs text-gray-400 font-medium">${item.day}</span>
-                        </div>
-
-                        <!-- Times -->
-                        <div class="flex flex-1 justify-around items-center pl-2">
-                            <!-- Sehri -->
-                            <div class="text-center">
-                                <div class="flex items-center justify-center text-gray-400 mb-1">
-                                    <i data-lucide="sunrise" class="w-3 h-3 mr-1"></i>
-                                    <span class="text-[10px] uppercase font-semibold">Sehri</span>
-                                </div>
-                                <span class="text-sm font-bold text-gray-800 bg-gray-100 px-2 py-1 rounded">${item.sehri}</span>
-                            </div>
-
-                            <!-- Iftar -->
-                            <div class="text-center">
-                                <div class="flex items-center justify-center text-gray-400 mb-1">
-                                    <i data-lucide="sunset" class="w-3 h-3 mr-1"></i>
-                                    <span class="text-[10px] uppercase font-semibold">Iftar</span>
-                                </div>
-                                <span class="text-sm font-bold text-gray-800 bg-gray-100 px-2 py-1 rounded">${item.iftar}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += html;
-            });
-            
-            // Re-init icons for new content safely
-            safeCreateIcons();
-        }
-
-        // --- Function: Countdown Timer ---
-        function startCountdown() {
-            // Set date to Feb 19, 2026 (Mock date from PDF)
-            const ramadanDate = new Date("February 19, 2026 00:00:00").getTime();
-
-            const timer = setInterval(function() {
-                const now = new Date().getTime();
-                const distance = ramadanDate - now;
-
-                // Time calculations
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                
-                // Display
-                const dEl = document.getElementById("cd-days");
-                const hEl = document.getElementById("cd-hours");
-                const mEl = document.getElementById("cd-minutes");
-
-                if (dEl) dEl.innerText = days > 0 ? String(days).padStart(2, '0') : "00";
-                if (hEl) hEl.innerText = String(hours).padStart(2, '0');
-                if (mEl) mEl.innerText = String(minutes).padStart(2, '0');
-
-                if (distance < 0) {
-                    clearInterval(timer);
-                    const container = document.getElementById("countdown-container");
-                    if (container) container.innerHTML = "<div class='text-brand-600 font-bold text-xl'>Ramadan Mubarak!</div>";
-                }
-            }, 1000);
-        }
-
-        // --- Init ---
-        document.addEventListener('DOMContentLoaded', () => {
-            safeCreateIcons();
-            startCountdown();
-            renderTimetable();
-        });
-
-    </script>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
