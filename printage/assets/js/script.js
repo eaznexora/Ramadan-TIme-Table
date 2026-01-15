@@ -5,20 +5,16 @@ function safeCreateIcons() {
     }
 }
 
-// --- Helper: Get Today's Date in "Feb 19" format ---
+// --- Helper: Get Today's Date ---
 function getTodayString() {
     const date = new Date();
-    
-    // --- TESTING SECTION ---
-    // Uncomment the line below to simulate a date (e.g., "Feb 20")
-    // return "Feb 20"; 
-    
-    const month = date.toLocaleString('default', { month: 'short' }); // "Jan", "Feb"
-    const day = String(date.getDate()).padStart(2, '0'); // "01", "19"
+    // return "Feb 20"; // Uncomment to test a specific date
+    const month = date.toLocaleString('default', { month: 'short' }); 
+    const day = String(date.getDate()).padStart(2, '0');
     return `${month} ${day}`;
 }
 
-// --- Data: Full 30-Day Ramadan 2026 Timetable ---
+// --- Data: Full 30-Day Timetable ---
 const fullTimetableData = [
     { roza: 1, date: "Feb 19", day: "Thu", sehri: "05:51 AM", iftar: "06:40 PM" },
     { roza: 2, date: "Feb 20", day: "Fri", sehri: "05:51 AM", iftar: "06:40 PM" },
@@ -52,35 +48,26 @@ const fullTimetableData = [
     { roza: 30, date: "Mar 20", day: "Fri", sehri: "05:26 AM", iftar: "06:51 PM" },
 ];
 
-// State
 let isFullView = false;
 const INITIAL_COUNT = 5;
 
-// --- Function: Generate HTML for a single row ---
+// --- Render Row ---
 function createRowHtml(item, animate = false) {
     const todayString = getTodayString();
     const isToday = (item.date === todayString); 
 
-    let cardClass = "";
-    let textClass = "";
-    let badge = "";
-
-    if (isToday) {
-        // Active Style
-        cardClass = 'bg-white border-l-[6px] border-l-brand-500 shadow-lg transform scale-[1.02] z-10';
-        textClass = 'text-brand-700';
-        badge = `<span class="bg-blue-500 text-white text-[10px] font-bold px-2 py-0.5 rounded ml-2 shadow-sm">TODAY</span>`;
-    } else {
-        // Inactive Style
-        cardClass = 'bg-gray-50 border border-gray-100 hover:bg-white border-l-0'; 
-        textClass = 'text-gray-600';
-        badge = '';
-    }
+    let cardClass = isToday 
+        ? 'bg-white border-l-[6px] border-l-brand-500 shadow-lg transform scale-[1.02] z-10' 
+        : 'bg-gray-50 border border-gray-100 hover:bg-white border-l-0';
     
-    const animationClass = animate ? 'animate-fade-in' : '';
+    let textClass = isToday ? 'text-brand-700' : 'text-gray-600';
+    let badge = isToday ? `<span class="bg-blue-500 text-white text-[10px] font-bold px-2 py-0.5 rounded ml-2 shadow-sm">TODAY</span>` : '';
+    
+    // Add 'reveal' class for scroll animation
+    const animationClass = animate ? 'animate-fade-in' : 'reveal';
 
     return `
-        <div class="${cardClass} ${animationClass} rounded-xl p-4 transition-all duration-200 flex items-center justify-between mb-3 relative overflow-hidden">
+        <div class="${cardClass} ${animationClass} rounded-xl p-4 transition-all duration-200 flex items-center justify-between mb-3 relative overflow-hidden group">
             <div class="flex flex-col w-1/3 border-r border-gray-100 pr-3">
                 <div class="flex items-center">
                     <span class="text-xs font-bold text-gray-400 uppercase">Roza ${item.roza}</span>
@@ -94,24 +81,25 @@ function createRowHtml(item, animate = false) {
                     <div class="flex items-center justify-center text-gray-400 mb-1">
                         <span class="text-[10px] uppercase font-semibold text-gray-400 tracking-wide">Sehri</span>
                     </div>
-                    <span class="text-sm font-bold text-gray-800 bg-gray-100/80 px-2 py-1.5 rounded-lg border border-gray-200 whitespace-nowrap min-w-[80px] flex justify-center shadow-sm">${item.sehri}</span>
+                    <span class="text-sm font-bold text-gray-800 bg-gray-100/80 px-2 py-1.5 rounded-lg border border-gray-200 whitespace-nowrap min-w-[80px] flex justify-center shadow-sm group-hover:bg-white transition-colors">${item.sehri}</span>
                 </div>
                 <div class="text-center flex flex-col items-center">
                     <div class="flex items-center justify-center text-gray-400 mb-1">
                         <span class="text-[10px] uppercase font-semibold text-gray-400 tracking-wide">Iftar</span>
                     </div>
-                    <span class="text-sm font-bold text-gray-800 bg-gray-100/80 px-2 py-1.5 rounded-lg border border-gray-200 whitespace-nowrap min-w-[80px] flex justify-center shadow-sm">${item.iftar}</span>
+                    <span class="text-sm font-bold text-gray-800 bg-gray-100/80 px-2 py-1.5 rounded-lg border border-gray-200 whitespace-nowrap min-w-[80px] flex justify-center shadow-sm group-hover:bg-white transition-colors">${item.iftar}</span>
                 </div>
             </div>
         </div>
     `;
 }
 
-// --- Function: Render Timetable (Dynamic Filtering) ---
+// --- Render Timetable ---
 function renderTimetable() {
     const container = document.getElementById('timetable-list');
     const btnText = document.getElementById('btn-text');
     const btnIcon = document.getElementById('btn-icon');
+    const btn = document.getElementById('view-all-btn');
     
     if (!container) return;
     
@@ -129,9 +117,7 @@ function renderTimetable() {
         });
         if (btnText) btnText.innerText = "View Complete Timetable";
         if (btnIcon) btnIcon.style.transform = "rotate(0deg)";
-        const btn = document.getElementById('view-all-btn');
         if (btn) btn.style.display = effectiveData.length <= INITIAL_COUNT ? 'none' : 'flex';
-
     } else {
         effectiveData.forEach(item => {
             container.innerHTML += createRowHtml(item, true);
@@ -141,9 +127,10 @@ function renderTimetable() {
     }
     
     safeCreateIcons();
+    initScrollAnimations(); // Re-trigger animations for new elements
 }
 
-// --- Function: Toggle View ---
+// --- Toggle View ---
 function toggleView() {
     const container = document.getElementById('timetable-list');
     if (isFullView) {
@@ -156,7 +143,7 @@ function toggleView() {
     }
 }
 
-// --- Function: Countdown Timer ---
+// --- Countdown ---
 function startCountdown() {
     const ramadanDate = new Date("February 19, 2026 00:00:00").getTime();
     const timer = setInterval(function() {
@@ -181,13 +168,10 @@ function startCountdown() {
     }, 1000);
 }
 
-// ... existing code ...
-
-// --- Function: Share App ---
+// --- Share App ---
 function shareApp() {
     const shareData = {
         title: 'Ramadan Timetable 2026',
-        // Updated description text as requested
         text: '🌙 *Ramadan Timetable 2026 - Mumbai*\n\nView the complete digital timetable with daily Sehri & Iftar timings, Duas, and more.\n\nClick here to view:',
         url: window.location.href
     };
@@ -199,134 +183,7 @@ function shareApp() {
     }
 }
 
-// ... existing code ...
-
-// ================= DUA OF THE DAY SLIDESHOW LOGIC =================
-
-const duaData = [
-    {
-        arabic: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي",
-        transliteration: "Allahumma innaka 'afuwwun tuhibbul-'afwa fa'fu 'anni",
-        translation: "O Allah, You are Forgiving and love forgiveness, so forgive me.",
-        reference: "(Tirmidhi)"
-    },
-    {
-        arabic: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
-        transliteration: "Rabbana atina fid-dunya hasanatan wa fil 'akhirati hasanatan waqina 'adhaban-nar",
-        translation: "Our Lord! Give us in this world that which is good and in the Hereafter that which is good, and save us from the torment of the Fire!",
-        reference: "(Qur'an 2:201)"
-    },
-    {
-        arabic: "یَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِی عَلٰی دِینِكَ",
-        transliteration: "Ya Muqallibal-qulubi thabbit qalbi 'ala dinika",
-        translation: "O Controller of the hearts, make my heart steadfast in Your religion.",
-        reference: "(Tirmidhi)"
-    }
-];
-
-let currentDuaIndex = 0;
-const duaIntervalTime = 5000; // 5 seconds
-let duaSlideInterval;
-
-function initDuaSlideshow() {
-    const slidesContainer = document.getElementById('dua-slides-container');
-    const indicatorsContainer = document.getElementById('dua-indicators');
-    
-    if (!slidesContainer || !indicatorsContainer) return;
-
-    // 1. Generate Slides and Indicators HTML
-    duaData.forEach((dua, index) => {
-        // Slide HTML
-        const slideHtml = `
-            <div class="w-full flex-shrink-0 px-4">
-                <div class="text-center flex flex-col justify-center h-full">
-                    <p class="arabic-text text-2xl mb-3 font-arabic leading-loose">
-                        ${dua.arabic}
-                    </p>
-                    <p class="text-gray-600 text-sm italic mb-2">
-                        (${dua.transliteration})
-                    </p>
-                    <p class="text-gray-800 text-sm font-medium">
-                        "${dua.translation}"
-                    </p>
-                    <p class="text-xs text-gray-400 mt-3">${dua.reference}</p>
-                </div>
-            </div>
-        `;
-        slidesContainer.innerHTML += slideHtml;
-
-        // Indicator HTML
-        const indicator = document.createElement('button');
-        indicator.classList.add('w-2', 'h-2', 'rounded-full', 'transition-colors', 'duration-300', 'bg-gray-300');
-        if (index === 0) indicator.classList.add('bg-brand-600');
-        
-        indicator.addEventListener('click', () => {
-            goToDuaSlide(index);
-            resetDuaInterval(); 
-        });
-        indicatorsContainer.appendChild(indicator);
-    });
-
-    // 2. Add Event Listeners for Prev/Next buttons
-    document.getElementById('prev-dua').addEventListener('click', () => {
-        prevDuaSlide();
-        resetDuaInterval();
-    });
-    document.getElementById('next-dua').addEventListener('click', () => {
-        nextDuaSlide();
-        resetDuaInterval();
-    });
-
-    // 3. Start Auto-play
-    startDuaSlideshow();
-}
-
-function updateDuaCarousel() {
-    const slidesContainer = document.getElementById('dua-slides-container');
-    const indicators = document.querySelectorAll('#dua-indicators button');
-    
-    // Move the container
-    slidesContainer.style.transform = `translateX(-${currentDuaIndex * 100}%)`;
-
-    // Update indicators
-    indicators.forEach((indicator, index) => {
-        if (index === currentDuaIndex) {
-            indicator.classList.remove('bg-gray-300');
-            indicator.classList.add('bg-brand-600');
-        } else {
-            indicator.classList.remove('bg-brand-600');
-            indicator.classList.add('bg-gray-300');
-        }
-    });
-}
-
-function nextDuaSlide() {
-    currentDuaIndex = (currentDuaIndex + 1) % duaData.length;
-    updateDuaCarousel();
-}
-
-function prevDuaSlide() {
-    currentDuaIndex = (currentDuaIndex - 1 + duaData.length) % duaData.length;
-    updateDuaCarousel();
-}
-
-function goToDuaSlide(index) {
-    currentDuaIndex = index;
-    updateDuaCarousel();
-}
-
-function startDuaSlideshow() {
-    duaSlideInterval = setInterval(nextDuaSlide, duaIntervalTime);
-}
-
-function resetDuaInterval() {
-    clearInterval(duaSlideInterval);
-    startDuaSlideshow();
-}
-
-// ================= END DUA SLIDESHOW LOGIC =================
-
-// --- NAVIGATION & MODAL LOGIC ---
+// --- Navigation & Modals ---
 function navAction(action) {
     const btns = document.querySelectorAll('.nav-btn');
     btns.forEach(btn => {
@@ -378,6 +235,131 @@ function closeModals() {
     highlightNav(0); 
 }
 
+// --- DUA SLIDESHOW ---
+const duaData = [
+    {
+        arabic: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي",
+        transliteration: "Allahumma innaka 'afuwwun tuhibbul-'afwa fa'fu 'anni",
+        translation: "O Allah, You are Forgiving and love forgiveness, so forgive me.",
+        reference: "(Tirmidhi)"
+    },
+    {
+        arabic: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+        transliteration: "Rabbana atina fid-dunya hasanatan wa fil 'akhirati hasanatan waqina 'adhaban-nar",
+        translation: "Our Lord! Give us in this world that which is good and in the Hereafter that which is good, and save us from the torment of the Fire!",
+        reference: "(Qur'an 2:201)"
+    },
+    {
+        arabic: "یَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِی عَلٰی دِینِكَ",
+        transliteration: "Ya Muqallibal-qulubi thabbit qalbi 'ala dinika",
+        translation: "O Controller of the hearts, make my heart steadfast in Your religion.",
+        reference: "(Tirmidhi)"
+    }
+];
+
+let currentDuaIndex = 0;
+const duaIntervalTime = 5000; 
+let duaSlideInterval;
+
+function initDuaSlideshow() {
+    const slidesContainer = document.getElementById('dua-slides-container');
+    const indicatorsContainer = document.getElementById('dua-indicators');
+    
+    if (!slidesContainer || !indicatorsContainer) return;
+
+    duaData.forEach((dua, index) => {
+        const slideHtml = `
+            <div class="w-full flex-shrink-0 px-4">
+                <div class="text-center flex flex-col justify-center h-full">
+                    <p class="arabic-text text-2xl mb-3 font-arabic leading-loose">${dua.arabic}</p>
+                    <p class="text-gray-600 text-sm italic mb-2">(${dua.transliteration})</p>
+                    <p class="text-gray-800 text-sm font-medium">"${dua.translation}"</p>
+                    <p class="text-xs text-gray-400 mt-3">${dua.reference}</p>
+                </div>
+            </div>
+        `;
+        slidesContainer.innerHTML += slideHtml;
+
+        const indicator = document.createElement('button');
+        indicator.classList.add('w-2', 'h-2', 'rounded-full', 'transition-colors', 'duration-300', 'bg-gray-300');
+        if (index === 0) indicator.classList.add('bg-brand-600');
+        
+        indicator.addEventListener('click', () => {
+            goToDuaSlide(index);
+            resetDuaInterval(); 
+        });
+        indicatorsContainer.appendChild(indicator);
+    });
+
+    document.getElementById('prev-dua').addEventListener('click', () => {
+        prevDuaSlide();
+        resetDuaInterval();
+    });
+    document.getElementById('next-dua').addEventListener('click', () => {
+        nextDuaSlide();
+        resetDuaInterval();
+    });
+
+    startDuaSlideshow();
+}
+
+function updateDuaCarousel() {
+    const slidesContainer = document.getElementById('dua-slides-container');
+    const indicators = document.querySelectorAll('#dua-indicators button');
+    
+    slidesContainer.style.transform = `translateX(-${currentDuaIndex * 100}%)`;
+
+    indicators.forEach((indicator, index) => {
+        if (index === currentDuaIndex) {
+            indicator.classList.remove('bg-gray-300');
+            indicator.classList.add('bg-brand-600');
+        } else {
+            indicator.classList.remove('bg-brand-600');
+            indicator.classList.add('bg-gray-300');
+        }
+    });
+}
+
+function nextDuaSlide() {
+    currentDuaIndex = (currentDuaIndex + 1) % duaData.length;
+    updateDuaCarousel();
+}
+
+function prevDuaSlide() {
+    currentDuaIndex = (currentDuaIndex - 1 + duaData.length) % duaData.length;
+    updateDuaCarousel();
+}
+
+function goToDuaSlide(index) {
+    currentDuaIndex = index;
+    updateDuaCarousel();
+}
+
+function startDuaSlideshow() {
+    duaSlideInterval = setInterval(nextDuaSlide, duaIntervalTime);
+}
+
+function resetDuaInterval() {
+    clearInterval(duaSlideInterval);
+    startDuaSlideshow();
+}
+
+// --- NEW: Scroll Animation Logic ---
+function initScrollAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, {
+        threshold: 0.1 // Trigger when 10% of element is visible
+    });
+
+    const elements = document.querySelectorAll('.reveal');
+    elements.forEach(el => observer.observe(el));
+}
+
 // --- Init ---
 document.addEventListener('DOMContentLoaded', () => {
     safeCreateIcons();
@@ -389,6 +371,6 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', toggleView);
     }
 
-    // Initialize the new Dua Slideshow
     initDuaSlideshow();
+    initScrollAnimations(); // Start animations
 });
