@@ -1,5 +1,5 @@
 // --- CONFIGURATION ---
-const DEMO_MODE = true; 
+const DEMO_MODE = false; 
 
 // --- Helper: Safe Icon Initialization ---
 function safeCreateIcons() {
@@ -435,3 +435,4 @@ document.addEventListener('DOMContentLoaded', () => {
     initDuaSlideshow();
     initScrollAnimations(); 
 });
+
