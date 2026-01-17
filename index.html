@@ -40,6 +40,7 @@
         html, body {
             -webkit-text-size-adjust: 100%;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         /* === HERO STYLES === */
@@ -167,11 +168,11 @@
             .feature-bar { padding-left: 15px; }
         }
 
-        /* === SLIDESHOW SECTION STYLES (LOGIC FIXED) === */
+        /* === SLIDESHOW SECTION STYLES (FIXED LOGIC) === */
         .slide-heading {
             font-family: 'Poppins', sans-serif;
-            font-weight: 600; /* Lower weight for fit */
-            font-size: 20px; /* Adjusted size for one line */
+            font-weight: 600;
+            font-size: 20px;
             line-height: 140%;
             text-align: center;
             text-transform: uppercase;
@@ -193,23 +194,33 @@
             text-align: center;
         }
         
-        /* Track Logic */
+        /* Carousel Window */
+        .carousel-viewport {
+            width: 100%;
+            overflow: hidden;
+            /* CRITICAL: Allows horizontal swipe but keeps vertical scroll */
+             
+            position: relative;
+        }
+
+        /* Carousel Track */
         .carousel-track {
             display: flex;
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* Smoother slide */
             width: 100%;
-            will-change: transform; /* Performance optimization */
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform;
         }
         
-        /* Slide Logic */
+        /* Individual Slide - FORCE FULL WIDTH */
         .carousel-slide {
             min-width: 100%;
             width: 100%;
-            flex: 0 0 100%; /* CRITICAL: Forces slide to be exactly 100% width of parent */
+            flex: 0 0 100%; /* Prevents shrinking */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
+            user-select: none; /* Prevents highlighting text while swiping */
         }
 
         .mockup-img {
@@ -217,7 +228,7 @@
             height: 418px;
             object-fit: contain;
             z-index: 10;
-            pointer-events: none; /* Allows swiping over image */
+             /* Passes swipe to container */
         }
 
         .shadow-ellipse {
@@ -227,14 +238,14 @@
             opacity: 0.45;
             filter: blur(5.15px);
             margin-top: -10px; 
-            margin-bottom: 12px; /* Tight gap */
+            margin-bottom: 12px;
         }
 
-        /* Fixed Button Style */
+        /* View Live Button */
         .view-live-btn {
             width: 106px;
             height: 28px;
-            background: #288954; /* Correct Green */
+            background: #288954;
             border-radius: 4px;
             display: flex;
             justify-content: center;
@@ -244,8 +255,9 @@
             font-size: 15px;
             text-transform: capitalize;
             color: #FFFFFF;
-            margin-bottom: 8px; /* Tight gap to dots */
-            z-index: 30; /* Ensure clickable */
+            margin-bottom: 8px;
+            z-index: 30;
+            cursor: pointer;
         }
 
         .nav-arrow {
@@ -258,10 +270,10 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 20;
+            z-index: 40; /* Higher Z to ensure clickability */
             transition: opacity 0.3s;
         }
-        .nav-arrow:hover { opacity: 0.8; }
+        .nav-arrow:hover { opacity: 0.9; }
         .arrow-icon {
             width: 12px;
             height: 12px;
@@ -366,12 +378,11 @@
             <div id="prevBtn" class="nav-arrow absolute left-6 top-[209px]">
                 <div class="arrow-icon arrow-left"></div>
             </div>
-
             <div id="nextBtn" class="nav-arrow absolute right-6 top-[209px]">
                 <div class="arrow-icon arrow-right"></div>
             </div>
 
-            <div class="w-full overflow-hidden" id="touchArea">
+            <div class="carousel-viewport" id="touchArea">
                 <div id="sliderTrack" class="carousel-track">
                     
                     <div class="carousel-slide">
@@ -396,104 +407,128 @@
             </div>
 
             <div class="flex gap-[13px] mt-2" id="dotsContainer">
-                <div class="dot active"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
+                <div class="dot active" data-index="0"></div>
+                <div class="dot" data-index="1"></div>
+                <div class="dot" data-index="2"></div>
             </div>
 
         </div>
     </section>
 
     <script>
-        lucide.createIcons();
+(function () {
+    const track = document.getElementById("sliderTrack");
+    const slides = Array.from(track.children);
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const dots = document.querySelectorAll(".dot");
+    const viewport = document.getElementById("touchArea");
 
-        // === CAROUSEL LOGIC WITH SWIPE ===
-        document.addEventListener('DOMContentLoaded', () => {
-            const track = document.getElementById('sliderTrack');
-            const touchArea = document.getElementById('touchArea');
-            const slides = document.querySelectorAll('.carousel-slide');
-            const dots = document.querySelectorAll('.dot');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            
-            if (!track || slides.length === 0) return;
+    if (!track || slides.length === 0) return;
 
-            let currentIndex = 0;
-            const totalSlides = slides.length;
-            let autoSlideInterval;
-            
-            // Swipe Variables
-            let touchStartX = 0;
-            let touchEndX = 0;
+    let index = 0;
+    let autoTimer = null;
 
-            function updateSlider() {
-                track.style.transform = `translateX(-${currentIndex * 100}%)`;
-                dots.forEach((dot, index) => {
-                    if (index === currentIndex) {
-                        dot.classList.add('active');
-                        dot.style.background = '#FFFFFF';
-                    } else {
-                        dot.classList.remove('active');
-                        dot.style.background = '#2B8174';
-                    }
-                });
-            }
+    const slideCount = slides.length;
 
-            function nextSlide() {
-                currentIndex = (currentIndex + 1) % totalSlides;
-                updateSlider();
-            }
+    /* ---------- CORE UPDATE ---------- */
+    function updateSlider(animate = true) {
+        track.style.transition = animate
+            ? "transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)"
+            : "none";
 
-            function prevSlide() {
-                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-                updateSlider();
-            }
+        track.style.transform = `translateX(-${index * 100}%)`;
 
-            // --- NAVIGATION ---
-            if(nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetTimer(); });
-            if(prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetTimer(); });
-
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    currentIndex = index;
-                    updateSlider();
-                    resetTimer();
-                });
-            });
-
-            // --- TOUCH SWIPE LOGIC ---
-            touchArea.addEventListener('touchstart', e => {
-                touchStartX = e.changedTouches[0].screenX;
-                clearInterval(autoSlideInterval); // Pause auto-slide on touch
-            });
-
-            touchArea.addEventListener('touchend', e => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-                startTimer(); // Resume auto-slide
-            });
-
-            function handleSwipe() {
-                if (touchEndX < touchStartX - 50) {
-                    nextSlide(); // Swipe Left
-                }
-                if (touchEndX > touchStartX + 50) {
-                    prevSlide(); // Swipe Right
-                }
-            }
-
-            // --- AUTO PLAY ---
-            function startTimer() {
-                autoSlideInterval = setInterval(nextSlide, 3000);
-            }
-
-            function resetTimer() {
-                clearInterval(autoSlideInterval);
-                startTimer();
-            }
-
-            startTimer();
+        dots.forEach((dot, i) => {
+            dot.classList.toggle("active", i === index);
         });
-    </script>
+    }
+
+    function next() {
+        index = (index + 1) % slideCount;
+        updateSlider();
+    }
+
+    function prev() {
+        index = (index - 1 + slideCount) % slideCount;
+        updateSlider();
+    }
+
+    /* ---------- AUTO SLIDE ---------- */
+    function startAuto() {
+        stopAuto();
+        autoTimer = setInterval(next, 3500);
+    }
+
+    function stopAuto() {
+        if (autoTimer) {
+            clearInterval(autoTimer);
+            autoTimer = null;
+        }
+    }
+
+    /* ---------- ARROWS ---------- */
+    nextBtn.addEventListener("click", () => {
+        next();
+        startAuto();
+    });
+
+    prevBtn.addEventListener("click", () => {
+        prev();
+        startAuto();
+    });
+
+    /* ---------- DOTS ---------- */
+    dots.forEach(dot => {
+        dot.addEventListener("click", () => {
+            index = Number(dot.dataset.index);
+            updateSlider();
+            startAuto();
+        });
+    });
+
+    /* ---------- TOUCH + DRAG (PRO LEVEL) ---------- */
+    let startX = 0;
+    let currentX = 0;
+    let dragging = false;
+
+    viewport.addEventListener("pointerdown", e => {
+        dragging = true;
+        startX = e.clientX;
+        stopAuto();
+        viewport.setPointerCapture(e.pointerId);
+    });
+
+    viewport.addEventListener("pointermove", e => {
+        if (!dragging) return;
+        currentX = e.clientX - startX;
+        track.style.transition = "none";
+        track.style.transform = `translateX(calc(-${index * 100}% + ${currentX}px))`;
+    });
+
+    viewport.addEventListener("pointerup", () => {
+        dragging = false;
+        const threshold = 60;
+
+        if (currentX < -threshold) next();
+        else if (currentX > threshold) prev();
+        else updateSlider();
+
+        currentX = 0;
+        startAuto();
+    });
+
+    viewport.addEventListener("pointercancel", () => {
+        dragging = false;
+        updateSlider();
+        startAuto();
+    });
+
+    /* ---------- INIT ---------- */
+    updateSlider(false);
+    startAuto();
+})();
+</script>
+
 </body>
 </html>
