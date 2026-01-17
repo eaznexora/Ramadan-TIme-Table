@@ -3,92 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Your Digital Ramadan Timetable | Eaz Nexora</title>
+    <title>Ramadan Timetable</title>
     
-    <meta name="description" content="Get a custom branded Digital Ramadan Timetable for your business, political campaign, or organization. Smart, auto-locating, and viral.">
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400;500;700&family=Roboto:wght@400;500&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
 
-    <script src="assets/js/tailwind-config.js"></script>
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .hero-pattern {
-            background-color: #064e3b;
-            background-image: radial-gradient(#10b981 1px, transparent 1px);
-            background-size: 30px 30px;
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        montserrat: ['Montserrat', 'sans-serif'],
+                        poppins: ['Poppins', 'sans-serif'],
+                        roboto: ['Roboto', 'sans-serif']
+                    },
+                    colors: {
+                        brand: { 500: '#10b981', 600: '#288954' }
+                    },
+                    backgroundImage: {
+                        'hero-bg': "url('assets/images/BG.png')",
+                        'digital-grad': "linear-gradient(180deg, #C8F1A9 0%, #99D76A 100%)"
+                    }
+                }
+            }
         }
+    </script>
+
+    <style>
+        /* === HERO STYLES === */
+        .design-heading {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 25px; 
+            line-height: 114%;
+            letter-spacing: 0%;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+        }
+        .design-subheading {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 121%;
+            letter-spacing: 0%;
+            text-align: center;
+            color: #E2E8F0;
+        }
+        .btn-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 15px;
+            line-height: 114%;
+            text-align: center;
+            text-transform: capitalize;
+            white-space: nowrap;
+        }
+        @media (min-width: 768px) {
+            .design-heading { font-size: 48px; }
+            .design-subheading { font-size: 20px; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* === FIGMA EXACT COMPARISON STYLES === */
+        .figma-heading {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            line-height: 154.22%;
+            text-transform: uppercase;
+            color: #144937;
+            text-align: center;
+        }
+        .figma-subheading {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 154.22%;
+            color: #000000;
+            text-align: center;
+        }
+        .figma-card {
+            width: 166px;
+            height: 300px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .figma-card-title {
+            font-family: 'Roboto', sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 15px;
+            line-height: 154.22%;
+            text-align: center;
+            margin-top: auto; 
+            margin-bottom: 4px;
+        }
+        .figma-list-text {
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 9px;
+            line-height: 154.22%;
+            width: 150px;
+            padding-left: 10px; 
+            margin-bottom: 20px;
+        }
+        .figma-line {
+            width: 142px;
+            height: 1px;
+            margin-bottom: 10px;
+        }
+        .bg-printed { background: #D9D9D9; }
+        .text-printed-title { color: #636060; }
+        .border-printed { background-color: rgba(0, 0, 0, 0.18); }
+        .text-list-black { color: #000000; }
+        .border-digital { background-color: rgba(44, 71, 24, 0.18); }
+        .text-list-green { color: #2C4718; }
+        .digital-border-style { border: 1px solid rgba(82, 144, 34, 0.23); }
+        .img-pos-printed { margin-top: 22px; }
+        .img-pos-digital { margin-top: 12px; }
+        .spacer-printed { height: 24px; }
+        .spacer-digital { height: 14px; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-[#032018] text-white font-sans antialiased overflow-x-hidden">
 
-    <section class="hero-pattern text-white relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-brand-900/90 to-brand-900/95"></div>
+    <div class="relative w-full bg-hero-bg bg-cover bg-center bg-no-repeat">
+        <div class="absolute inset-0 bg-black/40 pointer-events-none"></div>
+
+        <nav class="w-full px-6 py-6 flex items-center justify-between relative z-50">
+            <a href="#" class="flex-shrink-0 z-20"><img src="assets/images/logo.png" alt="Logo" class="w-10 h-10 object-contain drop-shadow-md"></a>
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none"><h1 class="text-xl md:text-2xl font-semibold tracking-wide text-white drop-shadow-md">Ramadan Timetable</h1></div>
+            <button class="flex-shrink-0 text-white z-20 p-1"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg></button>
+        </nav>
+
+        <div class="flex flex-col items-center justify-start pt-6 px-8 sm:px-10 pb-12 w-full max-w-4xl mx-auto relative z-10">
+            <div class="w-full max-w-[260px] md:max-w-md mb-6 animate-float">
+                <img src="assets/images/Mockup Floating.png" alt="App Mockup" class="w-full h-auto drop-shadow-2xl">
+            </div>
+            <h2 class="design-heading text-white mb-3">A SMARTER WAY<br>TO FOLLOW RAMADAN</h2>
+            <p class="design-subheading mb-8">From printed cards to a simple<br>digital experience.</p>
+            <div class="grid grid-cols-2 gap-3 w-full max-w-sm">
+                <a href="https://wa.me/919833059330" class="btn-text w-full py-3 rounded-lg text-white shadow-lg transition-transform hover:scale-[1.02] flex items-center justify-center" style="background-color: #288954;">Make Yours Now</a>
+                <a href="/printage/" target="_blank" class="btn-text w-full py-3 rounded-lg text-white backdrop-blur-sm transition-transform hover:scale-[1.02] flex items-center justify-center" style="background-color: #FFFFFF30; border: 1px solid #64726A;">View Demo</a>
+            </div>
+        </div>
+    </div>
+
+    <section class="bg-white py-12 flex flex-col items-center">
         
-        <div class="relative z-10 max-w-4xl mx-auto px-6 py-20 text-center">
-            <span class="inline-block py-1 px-3 rounded-full bg-brand-500/20 border border-brand-400/30 text-brand-300 text-xs font-semibold uppercase tracking-wider mb-6">
-                Ramadan 2026 Special
-            </span>
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">
-                Your Brand on Every Phone <br> This <span class="text-brand-400">Ramadan</span>
-            </h1>
-            <p class="text-lg md:text-xl text-brand-100 max-w-2xl mx-auto mb-10 leading-relaxed">
-                Don't just print paper cards. Give your community a <strong>Smart Digital Timetable</strong> that updates automatically, shows live countdowns, and carries your brand name daily.
-            </p>
+        <div class="text-center mb-[22px] px-4">
+            <h2 class="figma-heading">FROM PRINTED TO DIGITAL</h2>
+            <p class="figma-subheading">Designed to improve access for everyone</p>
+        </div>
+
+        <div class="flex flex-wrap justify-center items-start gap-[15px]">
             
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="https://wa.me/919833059330?text=Hello%2C%20I%20want%20to%20order%20a%20Digital%20Ramadan%20Timetable%20for%20my%20brand." class="px-8 py-4 bg-brand-500 hover:bg-brand-400 text-white font-bold rounded-xl shadow-lg shadow-brand-500/30 transition transform hover:-translate-y-1 flex items-center justify-center">
-                    <i data-lucide="message-circle" class="w-5 h-5 mr-2"></i>
-                    Order Now
-                </a>
-                <a href="/printage/" class="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold rounded-xl transition flex items-center justify-center">
-                    <i data-lucide="eye" class="w-5 h-5 mr-2"></i>
-                    View Demo
-                </a>
+            <div class="figma-card bg-printed shadow-md">
+                <div class="img-pos-printed">
+                    <img src="assets/images/Card.png" alt="Printed Card" style="width: 148px; height: 121px; object-fit: contain;">
+                </div>
+                <div class="spacer-printed"></div>
+                <h3 class="figma-card-title text-printed-title">Printed Timetable</h3>
+                <div class="figma-line border-printed"></div>
+                <ul class="figma-list-text text-list-black list-disc pl-4 space-y-0">
+                    <li>Limited reach (physical copy only)</li>
+                    <li>Single printed version</li>
+                    <li>Basic information only</li>
+                    <li>Needs to be carried</li>
+                </ul>
             </div>
+
+            <div class="figma-card bg-digital-grad digital-border-style shadow-md">
+                <div class="img-pos-digital">
+                    <img src="assets/images/Mockup 1.png" alt="Digital Card" style="width: 80px; height: 141px; object-fit: contain;">
+                </div>
+                <div class="spacer-digital"></div>
+                <h3 class="figma-card-title text-black">Digital Timetable</h3>
+                <div class="figma-line border-digital"></div>
+                <ul class="figma-list-text text-list-green list-disc pl-4 space-y-0">
+                    <li>Variable by location</li>
+                    <li>Wide reach (shareable with anyone)</li>
+                    <li>Multiple duas & live timers</li>
+                    <li>No need to carry anything</li>
+                </ul>
+            </div>
+
         </div>
+
+        <div class="text-center mt-[32px] px-4">
+            <h2 class="figma-heading">FROM PRINTED TO DIGITAL</h2>
+            <p class="figma-subheading">Designed to improve access for everyone</p>
+        </div>
+
     </section>
-
-    <section class="py-16 px-6 max-w-5xl mx-auto">
-        <div class="text-center mb-12">
-            <h2 class="text-2xl font-bold text-gray-900">Why Go Digital?</h2>
-            <p class="text-gray-500 mt-2">Replace outdated paper cards with smart technology.</p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
-                <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-green-600 mb-4">
-                    <i data-lucide="clock" class="w-6 h-6"></i>
-                </div>
-                <h3 class="text-lg font-bold mb-2">Auto-Highlighting</h3>
-                <p class="text-sm text-gray-500">The current Roza is automatically highlighted every day. No more searching for dates.</p>
-            </div>
-
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
-                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-4">
-                    <i data-lucide="share-2" class="w-6 h-6"></i>
-                </div>
-                <h3 class="text-lg font-bold mb-2">Viral Sharing</h3>
-                <p class="text-sm text-gray-500">Users can share your branded card on WhatsApp with one click. Your brand reaches thousands.</p>
-            </div>
-
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
-                <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 mb-4">
-                    <i data-lucide="smartphone" class="w-6 h-6"></i>
-                </div>
-                <h3 class="text-lg font-bold mb-2">App-Like Feel</h3>
-                <p class="text-sm text-gray-500">Works smoothly on Android and iPhone. Features a countdown, daily duas, and notifications.</p>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-white border-t border-gray-200 py-8 text-center">
-        <p class="text-sm text-gray-500">© 2026 Eaz Nexora. All Rights Reserved.</p>
-        <p class="text-xs text-gray-400 mt-2">Developing Next-Gen Digital Solutions</p>
-    </footer>
 
     <script>
         lucide.createIcons();
