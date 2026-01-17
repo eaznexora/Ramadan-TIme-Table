@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ramadan Timetable</title>
     
     <link rel="icon" type="image/png" href="assets/images/Logo.png">
@@ -36,6 +36,12 @@
     </script>
 
     <style>
+        /* === STABILITY FIXES === */
+        html, body {
+            -webkit-text-size-adjust: 100%; /* Prevents text inflation on landscape/mobile */
+            overflow-x: hidden; /* Prevents side-scrolling */
+        }
+
         /* === HERO STYLES === */
         .design-heading {
             font-family: 'Montserrat', sans-serif;
@@ -77,7 +83,7 @@
             animation: float 6s ease-in-out infinite;
         }
 
-        /* === FIGMA EXACT COMPARISON STYLES === */
+        /* === COMPARISON SECTION STYLES === */
         .figma-heading {
             font-family: 'Poppins', sans-serif;
             font-weight: 700;
@@ -142,16 +148,19 @@
         .spacer-printed { height: 24px; }
         .spacer-digital { height: 14px; }
 
-        /* === NEW FEATURE LIST STYLES === */
+        /* === NEW FEATURE LIST STYLES (Fixed for Phones) === */
+        /* Converted absolute Figma positions to flexible layouts for stability */
         .feature-bar {
             width: 100%;
+            max-width: 398px;
             height: 52px;
             background: #70B7AC;
             border-radius: 5px;
             display: flex;
             align-items: center;
-            padding-left: 23px; /* Based on Figma (39 - 16) */
+            padding-left: 23px; /* Precise padding from Figma relative distance */
             position: relative;
+            flex-shrink: 0; /* Prevents squishing */
         }
         
         .feature-text {
@@ -161,17 +170,15 @@
             font-size: 18px;
             line-height: 154.22%;
             color: #0E3D36;
-            margin-left: 19px; /* Gap between icon and text */
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            margin-left: 19px; /* Distance between icon and text */
+            white-space: nowrap; /* Keeps text on one line like design */
         }
 
-        /* Adjustments for mobile responsiveness on very small screens */
+        /* Mobile Adjustments: If screen is tiny, allow text to scale down slightly rather than break */
         @media (max-width: 400px) {
             .feature-text {
-                font-size: 14px;
-                margin-left: 10px;
+                font-size: 14px; /* Adaptive sizing for very small screens */
+                margin-left: 12px;
             }
             .feature-bar {
                 padding-left: 15px;
@@ -203,7 +210,7 @@
         </div>
     </div>
 
-    <section class="bg-white py-12 flex flex-col items-center">
+    <section class="bg-white py-12 flex flex-col items-center w-full">
         
         <div class="text-center mb-[22px] px-4">
             <h2 class="figma-heading">FROM PRINTED TO DIGITAL</h2>
@@ -247,30 +254,30 @@
             <p class="figma-subheading">Designed to improve access for everyone</p>
         </div>
 
-        <div class="flex flex-col w-full max-w-[398px] px-4 gap-[8px]">
+        <div class="flex flex-col items-center w-full px-4 gap-[8px]">
             
             <div class="feature-bar">
-                <img src="assets/icons/Clock.svg" alt="Clock" style="width: 40px; height: 40px;">
+                <img src="assets/icons/Clock.svg" alt="Clock" class="w-10 h-10 object-contain">
                 <span class="feature-text">Live Sehri & Iftar Countdown</span>
             </div>
 
             <div class="feature-bar">
-                <img src="assets/icons/Daily.svg" alt="Daily" style="width: 40px; height: 40px;">
+                <img src="assets/icons/Daily.svg" alt="Daily" class="w-10 h-10 object-contain">
                 <span class="feature-text">Daily Roza Details</span>
             </div>
 
             <div class="feature-bar">
-                <img src="assets/icons/City.svg" alt="City" style="width: 40px; height: 40px;">
+                <img src="assets/icons/City.svg" alt="City" class="w-10 h-10 object-contain">
                 <span class="feature-text">City Selection Control</span>
             </div>
 
             <div class="feature-bar">
-                <img src="assets/icons/dua.svg" alt="Dua" style="width: 40px; height: 40px;">
+                <img src="assets/icons/dua.svg" alt="Dua" class="w-10 h-10 object-contain">
                 <span class="feature-text">Ashrah-wise Duas</span>
             </div>
 
             <div class="feature-bar">
-                <img src="assets/icons/Link.svg" alt="Link" style="width: 40px; height: 40px;">
+                <img src="assets/icons/Link.svg" alt="Link" class="w-10 h-10 object-contain">
                 <span class="feature-text">Permanent Shareable Link</span>
             </div>
 
