@@ -277,7 +277,7 @@
         }
         .dot.active { background: #FFFFFF; }
 
-        /* === NEW SECTION: "ALWAYS KNOW WHAT'S NEXT" === */
+        /* === SECTION: ALWAYS KNOW WHAT'S NEXT === */
         .feature-showcase-heading {
             font-family: 'Poppins', sans-serif;
             font-weight: 700;
@@ -294,7 +294,6 @@
             line-height: 154%;
             color: #939393;
             margin-bottom: 4px;
-            /* Using padding to match the left alignment visual from Figma */
             padding-left: 2px;
         }
         .feature-card-1 {
@@ -328,6 +327,46 @@
             background-color: rgba(0, 0, 0, 0.16);
             margin-top: 24px;
         }
+
+        /* === SECTION: YOUR IDENTITY (NEW) === */
+        .identity-heading {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            line-height: 154%;
+            text-align: center;
+            text-transform: uppercase;
+            color: #0D4A41;
+            margin-bottom: 24px;
+            padding: 0 20px;
+        }
+        .identity-grid {
+            display: flex;
+            justify-content: center;
+            gap: 13px;
+            margin-bottom: 24px;
+            flex-wrap: wrap; /* ensures responsiveness on tiny screens */
+        }
+        .identity-img {
+            width: 192px;
+            height: 198px;
+            border-radius: 5px;
+            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+            object-fit: contain;
+            /* Responsive Constraint: */
+            max-width: 46%; 
+        }
+        .identity-text {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 154%;
+            text-align: center;
+            color: #505050;
+            max-width: 260px;
+            margin-bottom: 24px;
+        }
+
     </style>
 </head>
 <body class="bg-[#032018] text-white font-sans antialiased overflow-x-hidden">
@@ -462,6 +501,21 @@
         </div>
 
         <p class="feature-footer-text mb-6">A smart countdown that adapts before and during Ramadan.</p>
+
+        <div class="bottom-divider"></div>
+
+    </section>
+
+    <section class="bg-white pb-12 w-full flex flex-col items-center">
+        
+        <h2 class="identity-heading">YOUR IDENTITY<br>RESPECTFULLY PLACED</h2>
+        
+        <div class="identity-grid">
+            <img src="assets/images/ad1.png" class="identity-img" alt="Ad Left">
+            <img src="assets/images/ad2.png" class="identity-img" alt="Ad Right">
+        </div>
+
+        <p class="identity-text">Represent your community or business without interrupting the Ramadan flow.</p>
 
         <div class="bottom-divider"></div>
 
