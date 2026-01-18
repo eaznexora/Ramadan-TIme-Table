@@ -9,7 +9,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
@@ -24,7 +24,8 @@
                         roboto: ['Roboto', 'sans-serif']
                     },
                     colors: {
-                        brand: { 500: '#10b981', 600: '#288954' }
+                        brand: { 500: '#10b981', 600: '#288954' },
+                        darkGreen: '#0D4A41'
                     },
                     backgroundImage: {
                         'hero-bg': "url('assets/images/BG.png')",
@@ -41,6 +42,22 @@
             -webkit-text-size-adjust: 100%;
             overflow-x: hidden;
             scroll-behavior: smooth;
+        }
+
+        /* === NAVBAR (FIXED/STICKY) === */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            background-color: #032018;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .hero-spacer {
+            padding-top: 80px;
         }
 
         /* === HERO STYLES === */
@@ -168,7 +185,7 @@
             .feature-bar { padding-left: 15px; }
         }
 
-        /* === SLIDESHOW SECTION STYLES === */
+        /* === SLIDESHOW STYLES === */
         .slide-heading {
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
@@ -180,9 +197,7 @@
             padding: 0 10px;
             white-space: nowrap;
         }
-        @media (max-width: 360px) {
-            .slide-heading { font-size: 17px; white-space: normal; }
-        }
+        @media (max-width: 360px) { .slide-heading { font-size: 17px; white-space: normal; } }
         .slide-subheading {
             font-family: 'Roboto', sans-serif;
             font-weight: 400;
@@ -191,93 +206,22 @@
             color: #518F86;
             text-align: center;
         }
-        .carousel-viewport {
-            width: 100%;
-            overflow: hidden;
-            position: relative;
-            cursor: grab;
-        }
+        .carousel-viewport { width: 100%; overflow: hidden; position: relative; cursor: grab; }
         .carousel-viewport:active { cursor: grabbing; }
-        .carousel-track {
-            display: flex;
-            width: 100%;
-            will-change: transform;
-        }
-        .carousel-slide {
-            min-width: 100%;
-            width: 100%;
-            flex: 0 0 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            user-select: none;
-        }
-        .mockup-img {
-            width: 238px;
-            height: 418px;
-            object-fit: contain;
-            z-index: 10;
-        }
-        .shadow-ellipse {
-            width: 191px;
-            height: 12px;
-            background: #000000;
-            opacity: 0.45;
-            filter: blur(5.15px);
-            margin-top: -10px; 
-            margin-bottom: 12px;
-        }
-        .view-live-btn {
-            width: 106px;
-            height: 28px;
-            background: #288954;
-            border-radius: 4px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Roboto', sans-serif;
-            font-weight: 500;
-            font-size: 15px;
-            text-transform: capitalize;
-            color: #FFFFFF;
-            margin-bottom: 8px;
-            z-index: 30;
-            cursor: pointer;
-        }
-        .nav-arrow {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #D9D9D9;
-            opacity: 0.55;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 40;
-            transition: opacity 0.3s;
-        }
+        .carousel-track { display: flex; width: 100%; will-change: transform; }
+        .carousel-slide { min-width: 100%; width: 100%; flex: 0 0 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; user-select: none; }
+        .mockup-img { width: 238px; height: 418px; object-fit: contain; z-index: 10; }
+        .shadow-ellipse { width: 191px; height: 12px; background: #000000; opacity: 0.45; filter: blur(5.15px); margin-top: -10px; margin-bottom: 12px; }
+        .view-live-btn { width: 106px; height: 28px; background: #288954; border-radius: 4px; display: flex; justify-content: center; align-items: center; font-family: 'Roboto', sans-serif; font-weight: 500; font-size: 15px; text-transform: capitalize; color: #FFFFFF; margin-bottom: 8px; z-index: 30; cursor: pointer; }
+        .nav-arrow { width: 28px; height: 28px; border-radius: 50%; background: #D9D9D9; opacity: 0.55; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 40; transition: opacity 0.3s; }
         .nav-arrow:hover { opacity: 0.9; }
-        .arrow-icon {
-            width: 12px;
-            height: 12px;
-            border-top: 2px solid #0D4A41;
-            border-right: 2px solid #0D4A41;
-        }
+        .arrow-icon { width: 12px; height: 12px; border-top: 2px solid #0D4A41; border-right: 2px solid #0D4A41; }
         .arrow-left { transform: rotate(-135deg); margin-left: 4px; }
         .arrow-right { transform: rotate(45deg); margin-right: 4px; }
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #2B8174;
-            transition: background 0.3s;
-            cursor: pointer;
-        }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: #2B8174; transition: background 0.3s; cursor: pointer; }
         .dot.active { background: #FFFFFF; }
 
-        /* === SECTION: ALWAYS KNOW WHAT'S NEXT === */
+        /* === NEW SECTION STYLES === */
         .feature-showcase-heading {
             font-family: 'Poppins', sans-serif;
             font-weight: 700;
@@ -296,89 +240,114 @@
             margin-bottom: 4px;
             padding-left: 2px;
         }
-        .feature-card-1 {
-            width: 345px;
-            height: 157px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-            border-radius: 15px;
-            overflow: hidden;
-        }
-        .feature-card-2 {
-            width: 345px;
-            height: 383px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-            border-radius: 15px;
-            overflow: hidden;
-        }
-        .feature-footer-text {
-            font-family: 'Roboto', sans-serif;
-            font-weight: 400;
-            font-size: 15px;
-            line-height: 154%;
-            text-align: center;
-            color: #000000;
-            max-width: 287px;
-        }
-        .bottom-divider {
-            width: 396px;
-            height: 1px;
-            background-color: rgba(0, 0, 0, 0.16);
-            margin-top: 24px;
-        }
+        .feature-card-1 { width: 345px; height: 157px; border: 1px solid rgba(0, 0, 0, 0.08); filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)); border-radius: 15px; overflow: hidden; }
+        .feature-card-2 { width: 345px; height: 383px; border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 15px; overflow: hidden; }
+        .feature-footer-text { font-family: 'Roboto', sans-serif; font-weight: 400; font-size: 15px; line-height: 154%; text-align: center; color: #000000; max-width: 287px; }
+        .bottom-divider { width: 396px; height: 1px; background-color: rgba(0, 0, 0, 0.16); margin-top: 24px; }
+        
+        .identity-heading { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 22px; line-height: 154%; text-align: center; text-transform: uppercase; color: #0D4A41; margin-bottom: 24px; padding: 0 20px; }
+        .identity-grid { display: flex; justify-content: center; gap: 13px; margin-bottom: 24px; flex-wrap: wrap; }
+        .identity-img { width: 192px; height: 198px; border-radius: 5px; filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)); object-fit: contain; max-width: 46%; }
+        .identity-text { font-family: 'Roboto', sans-serif; font-weight: 400; font-size: 15px; line-height: 154%; text-align: center; color: #505050; max-width: 260px; margin-bottom: 24px; }
 
-        /* === SECTION: YOUR IDENTITY (NEW) === */
-        .identity-heading {
+        /* === CONTACT SECTION STYLES === */
+        .contact-heading {
             font-family: 'Poppins', sans-serif;
             font-weight: 700;
             font-size: 22px;
             line-height: 154%;
-            text-align: center;
             text-transform: uppercase;
             color: #0D4A41;
-            margin-bottom: 24px;
-            padding: 0 20px;
+            margin-bottom: 12px;
+            text-align: left;
         }
-        .identity-grid {
+        .cta-button {
+            width: auto;
+            min-width: 168px;
+            height: 34px;
+            background: #0D4A41;
+            border-radius: 5px;
             display: flex;
             justify-content: center;
-            gap: 13px;
-            margin-bottom: 24px;
-            flex-wrap: wrap; /* ensures responsiveness on tiny screens */
+            align-items: center;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 13px;
+            text-decoration: none;
+            transition: opacity 0.3s;
+            padding: 0 15px;
         }
-        .identity-img {
-            width: 192px;
-            height: 198px;
-            border-radius: 5px;
-            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-            object-fit: contain;
-            /* Responsive Constraint: */
-            max-width: 46%; 
+        .cta-button:hover { opacity: 0.9; }
+        
+        /* === FOOTER STYLES === */
+        .footer-logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 30px;
+            line-height: 154%;
+            text-transform: uppercase;
+            color: #FFFFFF;
         }
-        .identity-text {
+        .footer-sub {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 14px;
+            color: #FFFFFF;
+            margin-top: -5px;
+        }
+        .footer-link {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            font-size: 17px;
+            line-height: 154%;
+            color: #FFFFFF;
+            display: block;
+            margin-bottom: 8px;
+            text-decoration: none;
+        }
+        .footer-bottom-text {
             font-family: 'Roboto', sans-serif;
             font-weight: 400;
             font-size: 15px;
-            line-height: 154%;
+            line-height: 160%;
             text-align: center;
-            color: #505050;
-            max-width: 260px;
-            margin-bottom: 24px;
+            color: #FFFFFF;
+        }
+        
+        .footer-bottom-text a {
+            color: #FFFFFF;
+            text-decoration: underline;
+            font-weight: 500;
         }
 
     </style>
 </head>
 <body class="bg-[#032018] text-white font-sans antialiased overflow-x-hidden">
 
-    <div class="relative w-full bg-hero-bg bg-cover bg-center bg-no-repeat">
-        <div class="absolute inset-0 bg-black/40 pointer-events-none"></div>
+    <div id="mobileMenu" class="fixed inset-0 bg-[#0D4A41] z-[60] transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center">
+        <button id="closeMenuBtn" class="absolute top-6 right-6 text-white p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <div class="flex flex-col gap-8 text-center">
+            <a href="#home" class="text-white text-2xl font-poppins font-medium hover:text-brand-500 transition" onclick="toggleMenu()">Home</a>
+            <a href="#timetable" class="text-white text-2xl font-poppins font-medium hover:text-brand-500 transition" onclick="toggleMenu()">Timetable</a>
+            <a href="#designs" class="text-white text-2xl font-poppins font-medium hover:text-brand-500 transition" onclick="toggleMenu()">Designs</a>
+            <a href="#features" class="text-white text-2xl font-poppins font-medium hover:text-brand-500 transition" onclick="toggleMenu()">Features</a>
+            <a href="#contact" class="text-white text-2xl font-poppins font-medium hover:text-brand-500 transition" onclick="toggleMenu()">Contact</a>
+        </div>
+    </div>
 
-        <nav class="w-full px-6 py-6 flex items-center justify-between relative z-50">
-            <a href="#" class="flex-shrink-0 z-20"><img src="assets/images/Logo.png" alt="Logo" class="w-10 h-10 object-contain drop-shadow-md"></a>
-            <div class="absolute inset-0 flex items-center justify-center pointer-events-none"><h1 class="text-xl md:text-2xl font-semibold tracking-wide text-white drop-shadow-md">Ramadan Timetable</h1></div>
-            <button class="flex-shrink-0 text-white z-20 p-1"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg></button>
-        </nav>
+    <nav class="fixed top-0 left-0 w-full px-6 py-4 flex items-center justify-between z-50 bg-[#032018] shadow-md">
+        <a href="#home" class="flex-shrink-0 z-20"><img src="assets/images/Logo.png" alt="Logo" class="w-10 h-10 object-contain drop-shadow-md"></a>
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none"><h1 class="text-xl md:text-2xl font-semibold tracking-wide text-white drop-shadow-md">Ramadan Timetable</h1></div>
+        <button id="openMenuBtn" class="flex-shrink-0 text-white z-20 p-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg>
+        </button>
+    </nav>
+
+    <div id="home" class="hero-spacer relative w-full bg-hero-bg bg-cover bg-center bg-no-repeat">
+        <div class="absolute inset-0 bg-black/40 pointer-events-none"></div>
 
         <div class="flex flex-col items-center justify-start pt-6 px-8 sm:px-10 pb-12 w-full max-w-4xl mx-auto relative z-10">
             <div class="w-full max-w-[260px] md:max-w-md mb-6 animate-float">
@@ -393,7 +362,7 @@
         </div>
     </div>
 
-    <section class="bg-white py-12 flex flex-col items-center w-full">
+    <section id="timetable" class="bg-white py-12 flex flex-col items-center w-full">
         <div class="text-center mb-[22px] px-4">
             <h2 class="figma-heading">FROM PRINTED TO DIGITAL</h2>
             <p class="figma-subheading">Designed to improve access for everyone</p>
@@ -440,7 +409,7 @@
         </div>
     </section>
 
-    <section class="bg-[#0D4A41] py-10 w-full flex flex-col items-center overflow-hidden">
+    <section id="designs" class="bg-[#0D4A41] py-10 w-full flex flex-col items-center overflow-hidden">
         <div class="text-center mb-8 px-4">
             <h2 class="slide-heading mb-2">DIFFERENT DESIGNS. SAME CLARITY.</h2>
             <p class="slide-subheading">Same structure. Same clarity. Just a different look.</p>
@@ -482,44 +451,67 @@
         </div>
     </section>
 
-    <section class="bg-white py-12 w-full flex flex-col items-center">
-        
+    <section id="features" class="bg-white py-12 w-full flex flex-col items-center">
         <h2 class="feature-showcase-heading mb-6 px-4">ALWAYS KNOW WHAT’S NEXT</h2>
-
         <div class="flex flex-col items-start w-[345px] mb-6">
             <p class="feature-label">Before Ramadan (Countdown to start)</p>
             <div class="feature-card-1">
                 <img src="assets/images/time1.png" alt="Countdown" class="w-full h-full object-cover">
             </div>
         </div>
-
         <div class="flex flex-col items-start w-[345px] mb-8">
             <p class="feature-label">During Ramadan (Daily updates)</p>
             <div class="feature-card-2">
                 <img src="assets/images/time2.png" alt="Daily Updates" class="w-full h-full object-cover">
             </div>
         </div>
-
         <p class="feature-footer-text mb-6">A smart countdown that adapts before and during Ramadan.</p>
-
-        <div class="bottom-divider"></div>
-
     </section>
 
     <section class="bg-white pb-12 w-full flex flex-col items-center">
-        
         <h2 class="identity-heading">YOUR IDENTITY<br>RESPECTFULLY PLACED</h2>
-        
         <div class="identity-grid">
             <img src="assets/images/ad1.png" class="identity-img" alt="Ad Left">
             <img src="assets/images/ad2.png" class="identity-img" alt="Ad Right">
         </div>
-
         <p class="identity-text">Represent your community or business without interrupting the Ramadan flow.</p>
-
         <div class="bottom-divider"></div>
-
     </section>
+
+    <section id="contact" class="bg-white pb-16 w-full flex justify-center relative overflow-hidden">
+        <div class="flex flex-row items-center w-full max-w-sm px-4 relative h-[240px]">
+            <div class="flex flex-col z-20 relative" style="top: -20px;">
+                <h2 class="contact-heading">SIMPLE.<br>DIGITAL.<br>READY TO SHARE.</h2>
+                <a href="https://wa.me/919833059330" class="cta-button">Create Your Timetable</a>
+            </div>
+            <div class="absolute right-[-70px] top-[10px] z-10">
+                <img src="assets/images/Hand.png" alt="Hand Holding Phone" style="width: 220px; height: auto;">
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#0D4A41] pt-10 pb-6 w-full">
+        <div class="max-w-md mx-auto px-6">
+            <div class="flex flex-row justify-between items-start mb-8">
+                <div class="flex flex-col">
+                    <span class="footer-logo-text">RAMADAN</span>
+                    <span class="footer-sub">Timetable-2026/1447H</span>
+                </div>
+                <div class="grid grid-cols-2 gap-x-6 gap-y-2">
+                    <a href="#home" class="footer-link">Home</a>
+                    <a href="#timetable" class="footer-link">Timetable</a>
+                    <a href="#designs" class="footer-link">Designs</a>
+                    <a href="#features" class="footer-link">Features</a>
+                </div>
+            </div>
+            <div class="w-full h-[1px] bg-white opacity-20 mb-6"></div>
+            <div class="flex flex-col items-center gap-1">
+                <p class="footer-bottom-text">© 2026 RamadanTimetable.online. All rights reserved.</p>
+                <p class="footer-bottom-text">Professionally Crafted by <a href="https://www.eaznexora.com" target="_blank">Eaz Nexora</a></p>
+                <p class="footer-bottom-text">Privacy & Policy</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
     (function () {
@@ -534,13 +526,10 @@
 
         let index = 0;
         let autoTimer = null;
-
         const slideCount = slides.length;
 
         function updateSlider(animate = true) {
-            track.style.transition = animate
-                ? "transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)"
-                : "none";
+            track.style.transition = animate ? "transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)" : "none";
             track.style.transform = `translateX(-${index * 100}%)`;
             dots.forEach((dot, i) => {
                 dot.classList.toggle("active", i === index);
@@ -550,7 +539,6 @@
 
         function next() { index = (index + 1) % slideCount; updateSlider(); }
         function prev() { index = (index - 1 + slideCount) % slideCount; updateSlider(); }
-
         function startAuto() { stopAuto(); autoTimer = setInterval(next, 3500); }
         function stopAuto() { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
 
@@ -569,39 +557,29 @@
         let currentX = 0;
         let dragging = false;
 
-        viewport.addEventListener("pointerdown", e => {
-            dragging = true;
-            startX = e.clientX;
-            stopAuto();
-            viewport.setPointerCapture(e.pointerId);
-        });
-
-        viewport.addEventListener("pointermove", e => {
-            if (!dragging) return;
-            currentX = e.clientX - startX;
-            track.style.transition = "none";
-            track.style.transform = `translateX(calc(-${index * 100}% + ${currentX}px))`;
-        });
-
-        viewport.addEventListener("pointerup", () => {
-            dragging = false;
-            const threshold = 60;
-            if (currentX < -threshold) next();
-            else if (currentX > threshold) prev();
-            else updateSlider();
-            currentX = 0;
-            startAuto();
-        });
-
-        viewport.addEventListener("pointercancel", () => {
-            dragging = false;
-            updateSlider();
-            startAuto();
-        });
+        viewport.addEventListener("pointerdown", e => { dragging = true; startX = e.clientX; stopAuto(); viewport.setPointerCapture(e.pointerId); });
+        viewport.addEventListener("pointermove", e => { if (!dragging) return; currentX = e.clientX - startX; track.style.transition = "none"; track.style.transform = `translateX(calc(-${index * 100}% + ${currentX}px))`; });
+        viewport.addEventListener("pointerup", () => { dragging = false; const threshold = 60; if (currentX < -threshold) next(); else if (currentX > threshold) prev(); else updateSlider(); currentX = 0; startAuto(); });
+        viewport.addEventListener("pointercancel", () => { dragging = false; updateSlider(); startAuto(); });
 
         updateSlider(false);
         startAuto();
     })();
+
+    const openMenuBtn = document.getElementById('openMenuBtn');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    function toggleMenu() {
+        if (mobileMenu.classList.contains('translate-x-full')) {
+            mobileMenu.classList.remove('translate-x-full');
+        } else {
+            mobileMenu.classList.add('translate-x-full');
+        }
+    }
+
+    openMenuBtn.addEventListener('click', toggleMenu);
+    closeMenuBtn.addEventListener('click', toggleMenu);
     </script>
 </body>
 </html>
