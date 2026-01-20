@@ -681,7 +681,7 @@
                 </button>
                 
                 <div class="dua-content-box" id="dua-container">
-                    <div class="dua-arabic" id="dua-arabic">رَّبِّ اغْفِرْ وَارْحَمْ وَأَنتَ خَيْرُ الرَّاحِمِينَ</div>
+                    <div class="dua-arabic" id="dua-arabic">رَّبِّ اغْفِرْ وَارْحَمْ وَأَنتَ خَيْرُ الرَّاحِمِينَ</div>
                     <div class="dua-transliteration" id="dua-transliteration">(Rabbi'ghfir warham wa anta khayrur-rahimin)</div>
                     <div class="dua-translation" id="dua-translation">O My Lord, forgive and have mercy, and You are the Best of those who show mercy.</div>
                     <div class="dua-reference" id="dua-reference">Qur'an – Surah Al-Mu'minun (23:118)</div>
@@ -922,15 +922,19 @@
             }, 1000);
         }
 
+        // --- SHARE APP FUNCTION (UPDATED) ---
         function shareApp() {
+            const shareData = {
+                title: 'Ramadan Timetable 2026',
+                text: '🌙 *Ramadan Timetable 2026 - Mumbai*\n\nView the complete digital timetable with daily Sehri & Iftar timings, Duas, and more.\n\nClick here to view:',
+                url: window.location.href
+            };
             if (navigator.share) {
-                navigator.share({
-                    title: 'Ramadan Timetable 2026',
-                    text: 'Check out the Ramadan 2026 Timetable for Mumbai',
-                    url: window.location.href
-                }).catch(console.error);
+                navigator.share(shareData).catch((err) => console.log('Error sharing:', err));
             } else {
-                alert('Share feature not supported on this browser.');
+                navigator.clipboard.writeText(window.location.href)
+                    .then(() => alert('Link copied to clipboard!'))
+                    .catch(err => alert('Could not copy link.'));
             }
         }
 
@@ -997,19 +1001,19 @@
         // --- DUA SLIDER LOGIC ---
         const duaList = [
             {
-                arabic: "رَّبِّ اغْفِرْ وَارْحَمْ وَأَنتَ خَيْرُ الرَّاحِمِينَ",
+                arabic: "رَّبِّ اغْفِرْ وَارْحَمْ وَأَنتَ خَيْرُ الرَّاحِمِينَ",
                 transliteration: "(Rabbi'ghfir warham wa anta khayrur-rahimin)",
                 translation: "O My Lord, forgive and have mercy, and You are the Best of those who show mercy.",
                 ref: "Qur'an – Surah Al-Mu'minun (23:118)"
             },
             {
-                arabic: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+                arabic: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
                 transliteration: "(Rabbana atina fid-dunya hasanatan wa fil 'akhirati hasanatan waqina 'adhaban-nar)",
                 translation: "Our Lord! Give us in this world that which is good and in the Hereafter that which is good, and save us from the torment of the Fire.",
                 ref: "Qur'an – Surah Al-Baqarah (2:201)"
             },
             {
-                arabic: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي",
+                arabic: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي",
                 transliteration: "(Allahumma innaka 'afuwwun tuhibbul-'afwa fa'fu 'anni)",
                 translation: "O Allah, You are Forgiving and love forgiveness, so forgive me.",
                 ref: "Sunan Ibn Majah"
