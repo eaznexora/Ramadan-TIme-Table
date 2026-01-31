@@ -406,10 +406,10 @@
                     <div class="page-title">Ramadan Timetable</div>
                     <div class="header-actions">
                         <button class="action-btn" id="share-app-btn" title="Share App">
-                            <img src="./Assets/Icons/share.svg" alt="Share" class="action-icon-img">
+                            <img src="./assets/icons/share.svg" alt="Share" class="action-icon-img">
                         </button>
                         <button class="action-btn" id="whatsapp-chat-btn" title="Chat on WhatsApp">
-                            <img src="./Assets/Icons/whatsapp.svg" alt="WhatsApp" class="action-icon-img">
+                            <img src="./assets/icons/whatsapp.svg" alt="WhatsApp" class="action-icon-img">
                         </button>
                     </div>
                 </div>
@@ -428,7 +428,7 @@
                 </div>
                 <div class="countdown-card">
                     <div class="icon-container">
-                        <img src="./Assets/Icons/streamline-plump_sunset-remix.svg" alt="Sun" class="timer-icon-img">
+                        <img src="./assets/icons/streamline-plump_sunset-remix.svg" alt="Sun" class="timer-icon-img">
                     </div>
                     <div class="timer-content">
                         <div class="timer-label" id="countdown-title">Countdown to Iftar</div>
@@ -450,7 +450,7 @@
 
             <div class="content-section ad-section">
                 <div class="section-title-wrapper"><div class="section-title underlined">Dua for First Ashrah</div></div>
-                <img src="./Assets/Images/Dua1.png" alt="Sponsor" class="ad-image">
+                <img src="./assets/images/Dua1.png" alt="Sponsor" class="ad-image">
             </div>
 
             <div id="timetable" class="timetable-section">
@@ -465,7 +465,7 @@
             </div>
 
             <div class="content-section ad-section">
-                <img src="./Assets/Images/ad1.png" alt="Printage Ad" class="ad-image">
+                <img src="./assets/images/ad1.png" alt="Printage Ad" class="ad-image">
             </div>
 
             <div id="duas" class="content-section">
@@ -483,7 +483,7 @@
             </div>
 
             <div class="content-section ad-section">
-                <img src="./Assets/Images/ad2.png" alt="Printage Ad" class="ad-image">
+                <img src="./assets/images/ad2.png" alt="Printage Ad" class="ad-image">
             </div>
 
             <div class="ft">
@@ -501,15 +501,15 @@
         </div>
 
         <nav class="bottom-nav">
-            <a href="#home" class="nav-item active scroll-link"><img src="./Assets/Icons/home.svg" class="nav-icon"><span class="nav-text">Home</span></a>
-            <a href="#timetable" class="nav-item scroll-link"><img src="./Assets/Icons/timetable.svg" class="nav-icon"><span class="nav-text">Timetable</span></a>
-            <a href="#duas" class="nav-item scroll-link"><img src="./Assets/Icons/Group.svg" class="nav-icon"><span class="nav-text">Duas</span></a>
+            <a href="#home" class="nav-item active scroll-link"><img src="./assets/icons/home.svg" class="nav-icon"><span class="nav-text">Home</span></a>
+            <a href="#timetable" class="nav-item scroll-link"><img src="./assets/icons/timetable.svg" class="nav-icon"><span class="nav-text">Timetable</span></a>
+            <a href="#duas" class="nav-item scroll-link"><img src="./assets/icons/group.svg" class="nav-icon"><span class="nav-text">Duas</span></a>
             
             <button class="nav-item" onclick="openGenericModal('about-modal')">
-                <img src="./Assets/Icons/about.svg" class="nav-icon"><span class="nav-text">About</span>
+                <img src="./assets/icons/about.svg" class="nav-icon"><span class="nav-text">About</span>
             </button>
             <button class="nav-item" onclick="openGenericModal('contact-modal')">
-                <img src="./Assets/Icons/contact.svg" class="nav-icon"><span class="nav-text">Contact</span>
+                <img src="./assets/icons/contact.svg" class="nav-icon"><span class="nav-text">Contact</span>
             </button>
         </nav>
 
@@ -568,68 +568,65 @@
     </div>
 
     <script>
-        const DEMO_MODE = false; 
+    const DEMO_MODE = false;
 
-        const ramadanStartDate = new Date("February 19, 2026");
-       const fullTimetableData = Array.from({length: 30}, (_, i) => {
-    const current = new Date(ramadanStartDate);
-    current.setDate(ramadanStartDate.getDate() + i);
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    
-    return {
-        roza: i + 1,
-        date: `${monthNames[current.getMonth()]} ${String(current.getDate()).padStart(2, '0')}`,
-        // THIS LINE IS REQUIRED FOR JUMMAH TO WORK
-        day: current.getDay(), 
-        fullDate: `${current.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}`,
-        sehri: "05:51 AM", 
-        iftar: "06:40 PM", 
-        rawDate: current
-    };
-});
+    const ramadanStartDate = new Date("February 19, 2026");
+    const fullTimetableData = Array.from({ length: 30 }, (_, i) => {
+        const current = new Date(ramadanStartDate);
+        current.setDate(ramadanStartDate.getDate() + i);
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-        let isFullView = false;
-        const INITIAL_COUNT = 3; 
-        let lastDateString = ""; 
-        let currentSlide = 0;
-        let sliderInterval; // Variable to hold the auto-slide timer
+        return {
+            roza: i + 1,
+            date: `${monthNames[current.getMonth()]} ${String(current.getDate()).padStart(2, '0')}`,
+            day: current.getDay(),
+            fullDate: `${current.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}`,
+            sehri: "05:51 AM",
+            iftar: "06:40 PM",
+            rawDate: current
+        };
+    });
 
-        function getCurrentDate() {
-            if (DEMO_MODE) return new Date("2026-02-19T10:00:00"); 
-            return new Date();
-        }
+    let isFullView = false;
+    const INITIAL_COUNT = 3;
+    let lastDateString = "";
+    let currentSlide = 0;
+    let sliderInterval; 
 
-        function getTodayString() {
-            const date = getCurrentDate();
-            const month = date.toLocaleString('en-US', { month: 'short' }); 
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${month} ${day}`;
-        }
+    function getCurrentDate() {
+        if (DEMO_MODE) return new Date("2026-02-19T10:00:00");
+        return new Date();
+    }
 
-        function parseTime(timeStr, baseDate) {
-            const [time, modifier] = timeStr.split(' ');
-            let [hours, minutes] = time.split(':');
-            if (hours === '12') hours = '00';
-            if (modifier === 'PM') hours = parseInt(hours, 10) + 12;
-            const date = new Date(baseDate);
-            date.setHours(hours, minutes, 0, 0);
-            return date;
-        }
+    function getTodayString() {
+        const date = getCurrentDate();
+        const month = date.toLocaleString('en-US', { month: 'short' });
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${month} ${day}`;
+    }
 
-        function createRowHtml(item) {
-    const todayString = getTodayString();
-    const isToday = (item.date.toLowerCase() === todayString.toLowerCase());
-    
-    // Check if the day is Friday (JavaScript 0=Sun, 5=Fri)
-    const isFriday = (item.day === 5);
-    
-    const activeClass = isToday ? 'active' : '';
-    const jummahClass = isFriday ? 'jummah' : '';
-    
-    const todayTagHtml = isToday ? '<div class="today-tag">Today</div>' : '';
-    const jummahTagHtml = isFriday ? '<div class="jummah-tag">Jummah</div>' : '';
+    function parseTime(timeStr, baseDate) {
+        const [time, modifier] = timeStr.split(' ');
+        let [hours, minutes] = time.split(':');
+        if (hours === '12') hours = '00';
+        if (modifier === 'PM') hours = parseInt(hours, 10) + 12;
+        const date = new Date(baseDate);
+        date.setHours(hours, minutes, 0, 0);
+        return date;
+    }
 
-    return `
+    function createRowHtml(item) {
+        const todayString = getTodayString();
+        const isToday = (item.date.toLowerCase() === todayString.toLowerCase());
+        const isFriday = (item.day === 5);
+
+        const activeClass = isToday ? 'active' : '';
+        const jummahClass = isFriday ? 'jummah' : '';
+
+        const todayTagHtml = isToday ? '<div class="today-tag">Today</div>' : '';
+        const jummahTagHtml = isFriday ? '<div class="jummah-tag">Jummah</div>' : '';
+
+        return `
         <div class="schedule-card-wrapper">
             ${todayTagHtml}
             ${jummahTagHtml}
@@ -652,256 +649,236 @@
             </div>
         </div>
     `;
-}
-        function updateHeaderDate() {
-            const now = getCurrentDate();
-            const todayStr = getTodayString();
-            const todayData = fullTimetableData.find(d => d.date.toLowerCase() === todayStr.toLowerCase());
-            
-            document.getElementById('header-day').innerText = now.toLocaleDateString('en-US', { weekday: 'long' });
-            document.getElementById('header-date').innerText = now.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
-            
-            if(todayData) {
-                document.getElementById('header-ramadan-day').innerText = `${todayData.roza}${getOrdinal(todayData.roza)} Ramadan`;
-            } else {
-                try {
-                    const hijriDate = new Intl.DateTimeFormat('en-u-ca-islamic-nu-latn', {
-                        day: 'numeric',
-                        month: 'long'
-                    }).format(now);
-                    document.getElementById('header-ramadan-day').innerText = hijriDate;
-                } catch(e) {
-                    document.getElementById('header-ramadan-day').innerText = "Pre-Ramadan";
-                }
-            }
-        }
-
-        function getOrdinal(n) {
-            let s = ["th", "st", "nd", "rd"], v = n % 100;
-            return (s[(v - 20) % 10] || s[v] || s[0]);
-        }
-
-        function renderTimetable() {
-            const container = document.getElementById('timetable-list');
-            const btn = document.getElementById('view-all-btn');
-            if (!container) return;
-            
-            const todayString = getTodayString();
-            const todayIndex = fullTimetableData.findIndex(item => item.date.toLowerCase() === todayString.toLowerCase());
-            const startIndex = (todayIndex !== -1) ? todayIndex : 0;
-            const remainingRoza = fullTimetableData.slice(startIndex);
-
-            container.innerHTML = ''; 
-
-            if (remainingRoza.length === 0 && getCurrentDate() > fullTimetableData[29].rawDate) {
-                container.innerHTML = '<div style="text-align: center; color: #888; padding: 20px;">Ramadan has ended.</div>';
-                if(btn) btn.style.display = 'none';
-                return;
-            }
-
-            const dataToRender = isFullView ? remainingRoza : remainingRoza.slice(0, INITIAL_COUNT);
-            dataToRender.forEach(item => { container.innerHTML += createRowHtml(item); });
-            
-            if(btn) {
-                btn.innerText = isFullView ? "Show less" : "See complete timetable";
-                btn.style.display = (remainingRoza.length <= INITIAL_COUNT) ? 'none' : 'block';
-            }
-        }
-
-        function toggleView() {
-            isFullView = !isFullView;
-            renderTimetable();
-        }
-
-        // UPDATED: Slider Function with Manual Support
-        function renderDuaSlider(manualIndex = null) {
-            const container = document.getElementById('dua-container');
-            const dots = document.getElementById('slider-dots');
-            const now = getCurrentDate();
-            const todayData = fullTimetableData.find(d => d.date.toLowerCase() === getTodayString().toLowerCase());
-
-            // If manualIndex is provided, update currentSlide and restart the timer
-            if (manualIndex !== null) {
-                currentSlide = manualIndex;
-                clearInterval(sliderInterval);
-                sliderInterval = setInterval(renderDuaSlider, 5000);
-            }
-
-            let dynamicSlide = `<div class="dynamic-dua-content"><span class="dua-label">Ramadan Coming Soon</span><p class="dua-arabic">اللَّهُمَّ بَلِّغْنَا رَمَضَانَ</p><p class="dua-trans">(Allahumma Ballighna Ramadan)</p></div>`;
-            
-            if (todayData) {
-                const sehriTime = parseTime(todayData.sehri, now);
-                const iftarTime = parseTime(todayData.iftar, now);
-                if (now < sehriTime) {
-                    dynamicSlide = `<div class="dynamic-dua-content"><span class="dua-label">Sehri Dua</span><p class="dua-arabic">وَبِصَوْمِ غَدٍ نَّوَيْتُ مِنْ شَهْرِ رَمَضَانَ</p><p class="dua-trans">(Wa bisawmi ghadinn nawaiytu min shahri ramadan)</p></div>`;
-                } else if (now < iftarTime) {
-                    dynamicSlide = `<div class="dynamic-dua-content"><span class="dua-label">Iftar Dua</span><p class="dua-arabic">اللَّهُمَّ إِنِّي لَكَ صُمْتُ وَعَلَيْكَ تَوَكَّلْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ</p><p class="dua-trans">(Allahumma inni laka sumtu wa 'alayka tawakkaltu wa 'ala rizqika aftartu)</p></div>`;
-                } else {
-                    dynamicSlide = `<div class="dynamic-dua-content"><span class="dua-label">Post-Iftar</span><p class="dua-arabic">ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ</p></div>`;
-                }
-            }
-
-            const slides = [
-    dynamicSlide,
-    `<div class="dynamic-dua-content">
-        <span class="dua-label">1st Ashrah (Mercy)</span>
-        <p class="dua-arabic">رَبِّ اغْفِرْ وَارْحَمْ وَأَنْتَ خَيْرُ الرَّاحِمِينَ</p>
-        <p class="dua-trans">(Rabbi-ghfir war-ham wa Anta Khairur-Rahimeen)</p>
-    </div>`,
-    `<div class="dynamic-dua-content">
-        <span class="dua-label">2nd Ashrah (Forgiveness)</span>
-        <p class="dua-arabic">أَسْتَغْفِرُ اللَّهَ رَبِّي مِنْ كُلِّ ذَنْبٍ وَأَتُوبُ إِلَيْهِ</p>
-        <p class="dua-trans">(Astaghfirullaha Rabbi min kulli dhambin wa atoobu ilayh)</p>
-    </div>`
-];
-
-            container.innerHTML = slides[currentSlide];
-            
-            // Build dots with onclick for manual switching
-            dots.innerHTML = slides.map((_, i) => `<div class="dot ${i === currentSlide ? 'active' : ''}" onclick="renderDuaSlider(${i})"></div>`).join('');
-            
-            // Increment for next auto-slide if not manual
-            if (manualIndex === null) {
-                currentSlide = (currentSlide + 1) % slides.length;
-            }
-        }
-
-        function startCountdown() {
-            const titleElement = document.getElementById('countdown-title');
-            setInterval(function() {
-                const now = getCurrentDate(); 
-                const currentTodayString = getTodayString();
-                if (currentTodayString !== lastDateString) {
-                    lastDateString = currentTodayString;
-                    updateHeaderDate();
-                    renderTimetable();
-                }
-                let targetDate;
-                let labelText = "Countdown to Iftar"; 
-                if (now < ramadanStartDate) {
-                    targetDate = ramadanStartDate; labelText = "Ramadan Begins In";
-                } else {
-                    const todayData = fullTimetableData.find(d => d.date.toLowerCase() === currentTodayString.toLowerCase());
-                    if (todayData) {
-                        const sehriTime = parseTime(todayData.sehri, now);
-                        const iftarTime = parseTime(todayData.iftar, now);
-                        if (now < sehriTime) { targetDate = sehriTime; labelText = "Sehri Ends In"; }
-                        else if (now < iftarTime) { targetDate = iftarTime; labelText = "Iftar Begins In"; }
-                        else { labelText = "Day Ends"; targetDate = null; }
-                    } else { labelText = "Ramadan Ended"; targetDate = null; }
-                }
-                if (titleElement) titleElement.innerHTML = labelText;
-                if (targetDate) {
-                    const distance = targetDate - now;
-                    document.getElementById("cd-days").innerText = String(Math.floor(distance / 86400000)).padStart(2, '0');
-                    document.getElementById("cd-hours").innerText = String(Math.floor((distance % 86400000) / 3600000)).padStart(2, '0');
-                    document.getElementById("cd-minutes").innerText = String(Math.floor((distance % 3600000) / 60000)).padStart(2, '0');
-                    document.getElementById("cd-seconds").innerText = String(Math.floor((distance % 60000) / 1000)).padStart(2, '0');
-                }
-            }, 1000);
-        }
-
-        const duaDataStore = {
-    "Taraweeh": { 
-        arabic: "سُبْحَانَ ذِي الْمُلْكِ وَالْمَلَكُوتِ، سُبْحَانَ ذِي الْعِزَّةِ وَالْعَظَمَةِ وَالْهَيْبَةِ وَالْقُدْرَةِ وَالْكِبْرِيَاءِ وَالْجَبَرُوتِ، سُبْحَانَ الْمَلِكِ الْحَيِّ الَّذِي لَا يَنَامُ وَلَا يَمُوتُ، سُبُّوحٌ قُدُّوسٌ رَبُّنَا وَرَبُّ الْمَلَائِكَةِ وَالرُّوحِ، اللَّهُمَّ أَجِرْنَا مِنَ النَّارِ يَا مُجِيرُ يَا مُجِيرُ يَا مُجِيرُ", 
-        trans: "Subhana dhil-mulki wal-malakut, Subhana dhil-izzati wal-azamati wal-haibati wal-qudrati wal-kibriya'i wal-jabarut. Subhanal-malikil-hayyil-ladhi la yanamu wa la yamut. Subbuhun quddusun rabbuna wa rabbul-mala'ikati war-ruh. Allahumma ajirna minan-nar, ya mujiru, ya mujiru, ya mujiru.", 
-        eng: "Glory be to the Owner of the Kingdom and the Dominion. Glory be to the Possessor of Honor, Greatness, Awe, Power, Pride, and Might. Glory be to the Sovereign who is Alive, who neither sleeps nor dies. He is the Utterly Pure, the Holy, our Lord and the Lord of the Angels and the Soul. O Allah, protect us from the Fire, O Protector, O Protector, O Protector." 
-    },
-    "Lailatul Qadr": { 
-        arabic: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي", 
-        trans: "Allahumma innaka 'afuwwun tuhibbul-'afwa fa'fu 'anni", 
-        eng: "O Allah, You are Forgiving and love forgiveness, so forgive me." 
-    },
-    "Istighfar": { 
-        arabic: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ", 
-        trans: "Astaghfirullah al-azim alladhi la ilaha illa huwal-hayyul-qayyum wa atubu ilayh", 
-        eng: "I seek forgiveness from Allah, the Almighty, besides whom there is no God, the Living, the Sustainer, and I turn to Him in repentance." 
-    },
-    "Rahmah": { 
-        arabic: "رَبَّنَا آتِنَا مِن لَّدُنكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا", 
-        trans: "Rabbana atina min ladunka rahmatan wa hayyi' lana min amrina rashada", 
-        eng: "Our Lord, grant us from Yourself mercy and prepare for us from our affair right guidance." 
-    },
-    "Hidayah": { 
-        arabic: "اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ، وَعَافِنِي فِيمَنْ عَافَيْتَ، وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ", 
-        trans: "Allahummah-dini fiman hadayt, wa 'afini fiman 'afayt, wa tawallani fiman tawallayt", 
-        eng: "O Allah, guide me among those whom You have guided, grant me health among those whom You have granted health, and take me into Your care among those whom You have taken into Your care." 
-    },
-    "Shukr": { 
-        arabic: "رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ وَعَلَىٰ وَالِدَيَّ وَأَنْ أَعْمَلَ صَالِحًا تَرْضَاهُ", 
-        trans: "Rabbi awzi'ni an ashkura ni'matakal-lati an'amta 'alayya wa 'ala walidayya wa an a'mala salihan tardhahu", 
-        eng: "My Lord, enable me to be grateful for Your favor which You have bestowed upon me and upon my parents and to do righteousness of which You approve." 
     }
-};
 
-        function openDuaModal(duaKey) {
-            const data = duaDataStore[duaKey];
-            if(data) {
-                document.getElementById('m-title').innerText = duaKey;
-                document.getElementById('m-arabic').innerText = data.arabic;
-                document.getElementById('m-trans').innerText = data.trans;
-                document.getElementById('m-eng').innerText = data.eng;
-                document.getElementById('dua-modal').classList.add('open');
+    function updateHeaderDate() {
+        const now = getCurrentDate();
+        const todayStr = getTodayString();
+        const todayData = fullTimetableData.find(d => d.date.toLowerCase() === todayStr.toLowerCase());
+
+        document.getElementById('header-day').innerText = now.toLocaleDateString('en-US', { weekday: 'long' });
+        document.getElementById('header-date').innerText = now.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+
+        if (todayData) {
+            document.getElementById('header-ramadan-day').innerText = `${todayData.roza}${getOrdinal(todayData.roza)} Ramadan`;
+        } else {
+            try {
+                const hijriDate = new Intl.DateTimeFormat('en-u-ca-islamic-nu-latn', {
+                    day: 'numeric',
+                    month: 'long'
+                }).format(now);
+                document.getElementById('header-ramadan-day').innerText = hijriDate;
+            } catch (e) {
+                document.getElementById('header-ramadan-day').innerText = "Pre-Ramadan";
             }
         }
+    }
 
-        function openGenericModal(modalId) { document.getElementById(modalId)?.classList.add('open'); }
-        function closeModal(e, force = false) { if (force || e.target.classList.contains('modal-overlay')) document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('open')); }
+    function getOrdinal(n) {
+        let s = ["th", "st", "nd", "rd"], v = n % 100;
+        return (s[(v - 20) % 10] || s[v] || s[0]);
+    }
 
-        function shareApp() {
-            const shareData = {
-                title: 'Ramadan Timetable 2026',
-                text: '🌙 Ramadan Timetable 2026 - Mumbai\nView daily Sehri & Iftar timings:',
-                url: window.location.href
-            };
-            if (navigator.share) {
-                navigator.share(shareData).catch(err => console.log(err));
-            } else {
-                navigator.clipboard.writeText(window.location.href).then(() => alert('Link copied!'));
-            }
+    function renderTimetable() {
+        const container = document.getElementById('timetable-list');
+        const btn = document.getElementById('view-all-btn');
+        if (!container) return;
+
+        const todayString = getTodayString();
+        const todayIndex = fullTimetableData.findIndex(item => item.date.toLowerCase() === todayString.toLowerCase());
+        const startIndex = (todayIndex !== -1) ? todayIndex : 0;
+        const remainingRoza = fullTimetableData.slice(startIndex);
+
+        container.innerHTML = '';
+
+        if (remainingRoza.length === 0 && getCurrentDate() > fullTimetableData[29].rawDate) {
+            container.innerHTML = '<div style="text-align: center; color: #888; padding: 20px;">Ramadan has ended.</div>';
+            if (btn) btn.style.display = 'none';
+            return;
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            lastDateString = getTodayString();
-            updateHeaderDate();
-            startCountdown();
-            renderTimetable();
-            
-            // Initial call and start auto-slide timer
-            renderDuaSlider();
+        const dataToRender = isFullView ? remainingRoza : remainingRoza.slice(0, INITIAL_COUNT);
+        dataToRender.forEach(item => { container.innerHTML += createRowHtml(item); });
+
+        if (btn) {
+            btn.innerText = isFullView ? "Show less" : "See complete timetable";
+            btn.style.display = (remainingRoza.length <= INITIAL_COUNT) ? 'none' : 'block';
+        }
+    }
+
+    function toggleView() {
+        isFullView = !isFullView;
+        renderTimetable();
+    }
+
+    function renderDuaSlider(manualIndex = null) {
+        const container = document.getElementById('dua-container');
+        const dots = document.getElementById('slider-dots');
+        const now = getCurrentDate();
+        const todayData = fullTimetableData.find(d => d.date.toLowerCase() === getTodayString().toLowerCase());
+
+        if (manualIndex !== null) {
+            currentSlide = manualIndex;
+            clearInterval(sliderInterval);
             sliderInterval = setInterval(renderDuaSlider, 5000);
-            
-            document.getElementById('view-all-btn')?.addEventListener('click', toggleView);
-            document.getElementById('share-app-btn')?.addEventListener('click', shareApp);
-            document.getElementById('whatsapp-chat-btn')?.addEventListener('click', () => {
-                const url = `https://wa.me/?text=${encodeURIComponent("Check out this Ramadan App: " + window.location.href)}`;
-                window.open(url, '_blank');
-            });
+        }
 
-            const navItems = document.querySelectorAll('.nav-item');
-            const scrollContainer = document.querySelector('.scroll-content');
-            navItems.forEach(item => {
-                item.addEventListener('click', (e) => {
-                    navItems.forEach(n => n.classList.remove('active'));
-                    item.classList.add('active');
-                    if (item.classList.contains('scroll-link')) {
-                        const targetId = item.getAttribute('href').substring(1);
-                        const targetElement = document.getElementById(targetId);
-                        if (targetElement) scrollContainer.scrollTo({ top: targetElement.offsetTop - 20, behavior: 'smooth' });
-                    }
-                });
-            });
+        let dynamicSlide = `<div class="dynamic-dua-content"><span class="dua-label">Ramadan Coming Soon</span><p class="dua-arabic">اللَّهُمَّ بَلِّغْنَا رَمَضَانَ</p><p class="dua-trans">(Allahumma Ballighna Ramadan)</p></div>`;
+
+        if (todayData) {
+            const sehriTime = parseTime(todayData.sehri, now);
+            const iftarTime = parseTime(todayData.iftar, now);
+            if (now < sehriTime) {
+                dynamicSlide = `<div class="dynamic-dua-content"><span class="dua-label">Sehri Dua</span><p class="dua-arabic">وَبِصَوْمِ غَدٍ نَّوَيْتُ مِنْ شَهْرِ رَمَضَانَ</p><p class="dua-trans">(Wa bisawmi ghadinn nawaiytu min shahri ramadan)</p></div>`;
+            } else if (now < iftarTime) {
+                dynamicSlide = `<div class="dynamic-dua-content"><span class="dua-label">Iftar Dua</span><p class="dua-arabic">اللَّهُمَّ إِنِّي لَكَ صُمْتُ وَعَلَيْكَ تَوَكَّلْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ</p><p class="dua-trans">(Allahumma inni laka sumtu wa 'alayka tawakkaltu wa 'ala rizqika aftartu)</p></div>`;
+            } else {
+                dynamicSlide = `<div class="dynamic-dua-content"><span class="dua-label">Post-Iftar</span><p class="dua-arabic">ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ</p></div>`;
+            }
+        }
+
+        const slides = [
+            dynamicSlide,
+            `<div class="dynamic-dua-content"><span class="dua-label">1st Ashrah (Mercy)</span><p class="dua-arabic">رَبِّ اغْفِرْ وَارْحَمْ وَأَنْتَ خَيْرُ الرَّاحِمِينَ</p><p class="dua-trans">(Rabbi-ghfir war-ham wa Anta Khairur-Rahimeen)</p></div>`,
+            `<div class="dynamic-dua-content"><span class="dua-label">2nd Ashrah (Forgiveness)</span><p class="dua-arabic">أَسْتَغْفِرُ اللَّهَ رَبِّي مِنْ كُلِّ ذَنْبٍ وَأَتُوبُ إِلَيْهِ</p><p class="dua-trans">(Astaghfirullaha Rabbi min kulli dhambin wa atoobu ilayh)</p></div>`
+        ];
+
+        container.innerHTML = slides[currentSlide];
+        dots.innerHTML = slides.map((_, i) => `<div class="dot ${i === currentSlide ? 'active' : ''}" onclick="renderDuaSlider(${i})"></div>`).join('');
+
+        if (manualIndex === null) {
+            currentSlide = (currentSlide + 1) % slides.length;
+        }
+    }
+
+    function startCountdown() {
+        const titleElement = document.getElementById('countdown-title');
+        setInterval(function () {
+            const now = getCurrentDate();
+            const currentTodayString = getTodayString();
+            if (currentTodayString !== lastDateString) {
+                lastDateString = currentTodayString;
+                updateHeaderDate();
+                renderTimetable();
+            }
+            let targetDate;
+            let labelText = "Countdown to Iftar";
+            if (now < ramadanStartDate) {
+                targetDate = ramadanStartDate; labelText = "Ramadan Begins In";
+            } else {
+                const todayData = fullTimetableData.find(d => d.date.toLowerCase() === currentTodayString.toLowerCase());
+                if (todayData) {
+                    const sehriTime = parseTime(todayData.sehri, now);
+                    const iftarTime = parseTime(todayData.iftar, now);
+                    if (now < sehriTime) { targetDate = sehriTime; labelText = "Sehri Ends In"; }
+                    else if (now < iftarTime) { targetDate = iftarTime; labelText = "Iftar Begins In"; }
+                    else { labelText = "Day Ends"; targetDate = null; }
+                } else { labelText = "Ramadan Ended"; targetDate = null; }
+            }
+            if (titleElement) titleElement.innerHTML = labelText;
+            if (targetDate) {
+                const distance = targetDate - now;
+                document.getElementById("cd-days").innerText = String(Math.floor(distance / 86400000)).padStart(2, '0');
+                document.getElementById("cd-hours").innerText = String(Math.floor((distance % 86400000) / 3600000)).padStart(2, '0');
+                document.getElementById("cd-minutes").innerText = String(Math.floor((distance % 3600000) / 60000)).padStart(2, '0');
+                document.getElementById("cd-seconds").innerText = String(Math.floor((distance % 60000) / 1000)).padStart(2, '0');
+            }
+        }, 1000);
+    }
+
+    const duaDataStore = {
+        "Taraweeh": {
+            arabic: "سُبْحَانَ ذِي الْمُلْكِ وَالْمَلَكُوتِ، سُبْحَانَ ذِي الْعِزَّةِ وَالْعَظَمَةِ وَالْهَيْبَةِ وَالْقُدْرَةِ وَالْكِبْرِيَاءِ وَالْجَبَرُوتِ، سُبْحَانَ الْمَلِكِ الْحَيِّ الَّذِي لَا يَنَامُ وَلَا يَمُوتُ، سُبُّوحٌ قُدُّوسٌ رَبُّنَا وَرَبُّ الْمَلَائِكَةِ وَالرُّوحِ، اللَّهُمَّ أَجِرْنَا مِنَ النَّارِ يَا مُجِيرُ يَا مُجِيرُ يَا مُجِيرُ",
+            trans: "Subhana dhil-mulki wal-malakut, Subhana dhil-izzati wal-azamati wal-haibati wal-qudrati wal-kibriya'i wal-jabarut. Subhanal-malikil-hayyil-ladhi la yanamu wa la yamut. Subbuhun quddusun rabbuna wa rabbul-mala'ikati war-ruh. Allahumma ajirna minan-nar, ya mujiru, ya mujiru, ya mujiru.",
+            eng: "Glory be to the Owner of the Kingdom and the Dominion. Glory be to the Possessor of Honor, Greatness, Awe, Power, Pride, and Might. Glory be to the Sovereign who is Alive, who neither sleeps nor dies. He is the Utterly Pure, the Holy, our Lord and the Lord of the Angels and the Soul. O Allah, protect us from the Fire, O Protector, O Protector, O Protector."
+        },
+        "Lailatul Qadr": {
+            arabic: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي",
+            trans: "Allahumma innaka 'afuwwun tuhibbul-'afwa fa'fu 'anni",
+            eng: "O Allah, You are Forgiving and love forgiveness, so forgive me."
+        },
+        "Istighfar": {
+            arabic: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لاَ إِلَهَ إِلاَّ هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ",
+            trans: "Astaghfirullah al-azim alladhi la ilaha illa huwal-hayyul-qayyum wa atubu ilayh",
+            eng: "I seek forgiveness from Allah, the Almighty, besides whom there is no God, the Living, the Sustainer, and I turn to Him in repentance."
+        },
+        "Rahmah": {
+            arabic: "رَبَّنَا آتِنَا مِن لَّدُنكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا",
+            trans: "Rabbana atina min ladunka rahmatan wa hayyi' lana min amrina rashada",
+            eng: "Our Lord, grant us from Yourself mercy and prepare for us from our affair right guidance."
+        },
+        "Hidayah": {
+            arabic: "اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ، وَعَافِنِي فِيمَنْ عَافَيْتَ، وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ",
+            trans: "Allahummah-dini fiman hadayt, wa 'afini fiman 'afayt, wa tawallani fiman tawallayt",
+            eng: "O Allah, guide me among those whom You have guided, grant me health among those whom You have granted health, and take me into Your care among those whom You have taken into Your care."
+        },
+        "Shukr": {
+            arabic: "رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ وَعَلَىٰ وَالِدَيَّ وَأَنْ أَعْمَلَ صَالِحًا تَرْضَاهُ",
+            trans: "Rabbi awzi'ni an ashkura ni'matakal-lati an'amta 'alayya wa 'ala walidayya wa an a'mala salihan tardhahu",
+            eng: "My Lord, enable me to be grateful for Your favor which You have bestowed upon me and upon my parents and to do righteousness of which You approve."
+        }
+    };
+
+    function openDuaModal(duaKey) {
+        const data = duaDataStore[duaKey];
+        if (data) {
+            document.getElementById('m-title').innerText = duaKey;
+            document.getElementById('m-arabic').innerText = data.arabic;
+            document.getElementById('m-trans').innerText = data.trans;
+            document.getElementById('m-eng').innerText = data.eng;
+            document.getElementById('dua-modal').classList.add('open');
+        }
+    }
+
+    function openGenericModal(modalId) { document.getElementById(modalId)?.classList.add('open'); }
+    function closeModal(e, force = false) { if (force || e.target.classList.contains('modal-overlay')) document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('open')); }
+
+    function shareApp() {
+        const shareData = {
+            title: 'Ramadan Timetable 2026',
+            text: '🌙 Ramadan Timetable 2026 - Mumbai\nView daily Sehri & Iftar timings:',
+            url: window.location.href
+        };
+        if (navigator.share) {
+            navigator.share(shareData).catch(err => console.log(err));
+        } else {
+            navigator.clipboard.writeText(window.location.href).then(() => alert('Link copied!'));
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        lastDateString = getTodayString();
+        updateHeaderDate();
+        startCountdown();
+        renderTimetable();
+
+        renderDuaSlider();
+        sliderInterval = setInterval(renderDuaSlider, 5000);
+
+        document.getElementById('view-all-btn')?.addEventListener('click', toggleView);
+        document.getElementById('share-app-btn')?.addEventListener('click', shareApp);
+        
+        // --- YOUR CUSTOM WHATSAPP LOGIC IS NOW HERE ---
+        document.getElementById('whatsapp-chat-btn')?.addEventListener('click', () => {
+            const message = `🌙 Ramadan Timetable 2026 - Mumbai\nView daily Sehri & Iftar timings:\n${window.location.href}`;
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
         });
 
-        document.getElementById('whatsapp-chat-btn')?.addEventListener('click', () => {
-    const message = `🌙 Ramadan Timetable 2026 - Mumbai
-View daily Sehri & Iftar timings:
-${window.location.href}`;
-
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-});
-
-    </script>
+        const navItems = document.querySelectorAll('.nav-item');
+        const scrollContainer = document.querySelector('.scroll-content');
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                navItems.forEach(n => n.classList.remove('active'));
+                item.classList.add('active');
+                if (item.classList.contains('scroll-link')) {
+                    const targetId = item.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) scrollContainer.scrollTo({ top: targetElement.offsetTop - 20, behavior: 'smooth' });
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
